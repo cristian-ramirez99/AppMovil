@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_theme"
+    tools:context=".Login">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="345dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="44dp"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="@+id/etCorreoLogin"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etCorreoLogin"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="92dp"
+        android:ems="10"
+        android:hint="@string/placeholder_correo"
+        android:inputType="textPersonName"
+        android:singleLine="false"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/etPasswordLogin"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <Button
+        android:id="@+id/btnLoginLogin"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="108dp"
+        android:backgroundTint="@color/btn_azul"
+        android:text="@string/login"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/btnRegistrarLogin"
+        app:layout_constraintTop_toBottomOf="@+id/etPasswordLogin"
+        app:rippleColor="#FFFFFF" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="52dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCorreoLogin"
+        app:srcCompat="@android:drawable/ic_lock_idle_lock" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="92dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:srcCompat="@android:drawable/sym_action_email" />
+
+    <EditText
+        android:id="@+id/etPasswordLogin"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:hint="@string/placeholder_password"
+        android:inputType="textPassword"
+        android:textColor="#FFFFFF"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/btnLoginLogin"
+        app:layout_constraintTop_toBottomOf="@+id/etCorreoLogin" />
+
+    <Button
+        android:id="@+id/btnRegistrarLogin"
+        android:layout_width="340dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/btn_amarillo"
+        android:text="@string/btn_no_account"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLoginLogin" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

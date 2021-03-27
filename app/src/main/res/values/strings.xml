@@ -10,6 +10,7 @@
     <!--Buttons-->
     <string name="btn_no_account">No tienes cuenta? Registrate ahora</string>
     <string name="btn_registrar">Registrar</string>
+    <string name="btn_aceptar">Aceptar</string>
 
     <!--Checkbox-->
     <string name="cb_aceptar_terminos">Acepta los terminos </string>
@@ -19,4 +20,9 @@
     <string name="placeholder_password">Introduce la contraseña</string>
     <string name="placeholder_nombre">Introduce tu nombre</string>
     <string name="placeholder_repeat_password">Repita la contraseña</string>
+
+    <!--Control de errores-->
+    <string name="error_campos_vacios">Introduce todos los datos</string>
+    <string name="error_passwords_diferentes">Contraseñas no coinciden</string>
+    <string name="error_terminos_sin_aceptar">Debes aceptar los terminos</string>
 </resources>

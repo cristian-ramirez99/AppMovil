@@ -4,6 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modal.error">
+    tools:context=".modal.error"
+    android:background="@color/dark_theme">
+
+    <ImageView
+        android:id="@+id/ivAlertError"
+        android:layout_width="136dp"
+        android:layout_height="136dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.112"
+        app:srcCompat="@android:drawable/stat_notify_error"
+        app:tint="@color/warning" />
+
+    <TextView
+        android:id="@+id/tvMensajeError"
+        android:layout_width="262dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivAlertError" />
+
+    <Button
+        android:id="@+id/btnAceptarError"
+        android:layout_width="217dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/btn_azul"
+        android:text="@string/btn_aceptar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMensajeError" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="239dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAceptarError" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

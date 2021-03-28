@@ -12,6 +12,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class Login extends AppCompatActivity {
     private EditText etCorreo;
     private EditText etPassword;
@@ -22,6 +30,10 @@ public class Login extends AppCompatActivity {
     private AlertDialog.Builder dialogBuilder;
     private TextView tvMensaje;
     private Button btnAceptar;
+
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "http://10.0.2.2:3000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +74,47 @@ public class Login extends AppCompatActivity {
             open_modal(mensaje);
             return;
         }
+        ////////////////////////////////////////////////dasddsadas
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        //Si hago login correctamente, cambio de activity a dashboard
-        change_activity_to_dashboard();
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
+
+        //Btn onClick
+        HashMap<String, String> map = new HashMap<>();
+
+        map.put("email", correo);
+        map.put("password", password);
+
+        Call<LoginResult> call = retrofitInterface.executeLogin(map);
+
+        call.enqueue(new Callback<LoginResult>() {
+            @Override
+            public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
+                //Si hago login correctamente, cambio de activity a dashboard
+                if (response.code() == 200) {
+                    change_activity_to_dashboard();
+
+                    //Correo no es esta registrado
+                } else if (response.code() == 404) {
+                    String mensaje = getString(R.string.error_correo_no_existe);
+                    open_modal(mensaje);
+
+                    //Si correo no coincide con la password
+                } else if (response.code() == 400) {
+                    String mensaje = getString(R.string.error_password);
+                    open_modal(mensaje);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResult> call, Throwable t) {
+                String mensaje = getString(R.string.error_conexion_DB);
+                open_modal(mensaje);
+            }
+        });
     }
 
     //activity_login -> acivity_registrar

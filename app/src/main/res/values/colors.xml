@@ -6,11 +6,19 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+
+    <!--Themes-->
     <color name="white">#FFFFFFFF</color>
     <color name="dark_theme">#121212</color>
+
+    <!--Links-->
     <color name="azul_link">#03DAC6</color>
+
+    <!--Buttons-->
     <color name="btn_azul">#2969DA</color>
     <color name="btn_amarillo">#DFA81C</color>
+
+    <!--Icons-->
     <color name="warning">#FFC107</color>
     <color name="danger">#C62828</color>
 </resources>

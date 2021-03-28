@@ -13,6 +13,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class Registrar extends AppCompatActivity {
     private TextView txtvLogin;
     private EditText etNombre;
@@ -27,6 +35,11 @@ public class Registrar extends AppCompatActivity {
     private AlertDialog.Builder dialogBuilder;
     private TextView tvMensaje;
     private Button btnAceptar;
+
+
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "http://10.0.2.2:3000/api/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +100,47 @@ public class Registrar extends AppCompatActivity {
             return;
         }
 
-        //Si se registra correctamente, cambio de activity a login
-        change_activity_to_login();
+        //Convertimos HTTP API in to interface de java
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //Crear interface
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
+
+
+        HashMap<String, String> map = new HashMap<>();
+
+        //Body
+        map.put("nombre", nombre);
+        map.put("email", correo);
+        map.put("password", password);
+
+        //Hace peticion @POST(/usuarios)
+        Call<Void> call = retrofitInterface.executeRegistrar(map);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                //Si registro correctamente, cambio de activity a login
+                if (response.code() == 200) {
+                    change_activity_to_login();
+
+                    //Correo no es esta registrado
+                } else if (response.code() == 400) {
+                    String mensaje = getString(R.string.error_correo_existe);
+                    open_modal(mensaje);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                //Si no se puede conectar al servidor
+                String mensaje = getString(R.string.error_conexion_DB);
+                open_modal(mensaje);
+            }
+        });
     }
 
     private void change_activity_to_login() {

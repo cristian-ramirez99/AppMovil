@@ -10,7 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.sintesis.autenticado.Dashboard;
 
 import java.util.HashMap;
 
@@ -33,7 +34,7 @@ public class Login extends AppCompatActivity {
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://10.0.2.2:3000/";
+    private String BASE_URL = "http://10.0.2.2:3000/api/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,20 +75,24 @@ public class Login extends AppCompatActivity {
             open_modal(mensaje);
             return;
         }
-        ////////////////////////////////////////////////dasddsadas
+
+        //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        //Crear interface
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-        //Btn onClick
+
         HashMap<String, String> map = new HashMap<>();
 
+        //Body
         map.put("email", correo);
         map.put("password", password);
 
+        //Hace peticion @POST(/login)
         Call<LoginResult> call = retrofitInterface.executeLogin(map);
 
         call.enqueue(new Callback<LoginResult>() {
@@ -111,6 +116,7 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginResult> call, Throwable t) {
+                //Si no se puede conectar al servidor
                 String mensaje = getString(R.string.error_conexion_DB);
                 open_modal(mensaje);
             }

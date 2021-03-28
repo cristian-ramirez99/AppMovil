@@ -30,4 +30,7 @@
     <string name="error_conexion_DB">No se pudo conectar con el servidor</string>
     <string name="error_correo_no_existe">Correo no registrado</string>
     <string name="error_password">Contraseña no válida</string>
+    <string name="error_correo_existe">El correo ya esta registrado</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

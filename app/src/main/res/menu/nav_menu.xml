@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ic_qr"
+        android:icon="@drawable/ic_qr"
+        android:title="QR" />
+    <item
+        android:id="@+id/ic_carrito"
+        android:icon="@drawable/ic_carrito"
+        android:title="Carrito" />
+    <item
+        android:id="@+id/ic_signout"
+        android:icon="@drawable/ic_signout"
+        android:title="Cerrar sesión" />
+</menu>

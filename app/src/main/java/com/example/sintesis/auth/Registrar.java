@@ -1,4 +1,4 @@
-package com.example.sintesis;
+package com.example.sintesis.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.sintesis.R;
+import com.example.sintesis.RetrofitInterface;
 
 import java.util.HashMap;
 
@@ -150,11 +152,11 @@ public class Registrar extends AppCompatActivity {
 
     private void open_modal(String mensaje) {
         dialogBuilder = new AlertDialog.Builder(this);
-        final View modalView = getLayoutInflater().inflate(R.layout.activity_error, null);
+        final View modalView = getLayoutInflater().inflate(R.layout.activity_modal_error, null);
 
         //View de los widgets del modal
-        btnAceptar = modalView.findViewById(R.id.btnAceptarError);
-        tvMensaje = modalView.findViewById(R.id.tvMensajeError);
+        btnAceptar = modalView.findViewById(R.id.btnAceptarModalError);
+        tvMensaje = modalView.findViewById(R.id.tvMensajeModalError);
 
         //Cambiamos el mensaje
         tvMensaje.setText(mensaje);

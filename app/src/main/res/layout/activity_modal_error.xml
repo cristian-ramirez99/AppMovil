@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modal.error"
+    tools:context=".modal.ModalError"
     android:background="@color/dark_theme">
 
     <ImageView
-        android:id="@+id/ivAlertError"
+        android:id="@+id/ivAlertModalError"
         android:layout_width="136dp"
         android:layout_height="136dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,7 +21,7 @@
         app:tint="@color/warning" />
 
     <TextView
-        android:id="@+id/tvMensajeError"
+        android:id="@+id/tvMensajeModalError"
         android:layout_width="262dp"
         android:layout_height="38dp"
         android:layout_marginTop="32dp"
@@ -32,10 +32,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivAlertError" />
+        app:layout_constraintTop_toBottomOf="@+id/ivAlertModalError" />
 
     <Button
-        android:id="@+id/btnAceptarError"
+        android:id="@+id/btnAceptarModalError"
         android:layout_width="217dp"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
@@ -44,16 +44,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMensajeError" />
+        app:layout_constraintTop_toBottomOf="@+id/tvMensajeModalError" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvDejarMarginModalError"
         android:layout_width="239dp"
         android:layout_height="18dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAceptarError" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAceptarModalError" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

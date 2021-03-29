@@ -34,4 +34,19 @@
 
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/tvCorreoDashboard"
+        android:layout_width="292dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="76dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

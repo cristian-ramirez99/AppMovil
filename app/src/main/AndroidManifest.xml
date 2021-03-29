@@ -13,10 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sintesis">
-        <activity android:name=".modal.error"></activity>
+        <activity android:name=".modal.ModalError"></activity>
         <activity android:name=".autenticado.Dashboard" />
-        <activity android:name=".Registrar" />
-        <activity android:name=".Login" />
+        <activity android:name=".auth.Registrar" />
+        <activity android:name=".auth.Login" />
         <activity android:name=".MainActivity">
 
             <intent-filter>

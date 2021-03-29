@@ -1,4 +1,4 @@
-package com.example.sintesis;
+package com.example.sintesis.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.sintesis.R;
+import com.example.sintesis.RetrofitInterface;
 import com.example.sintesis.autenticado.Dashboard;
+import com.example.sintesis.modal.ModalError;
 
 import java.util.HashMap;
 
@@ -35,6 +38,9 @@ public class Login extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
     private String BASE_URL = "http://10.0.2.2:3000/api/";
+
+    public static final String TOKEN = "com.example.sintesis_20.auth.TOKEN";
+    public static final String CORREO = "com.example.sintesis_20.auth.CORREO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +70,16 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    /*Comprobacion que todos los campos esten rellenados si es asi hace peticion HTTP para hacer
+      login. Si login correcto va a dashboard, en caso contrario se muestra modal indicando el
+      error*/
     private void login() {
+
         //Obtener referencia de texto de los widgets
         String correo = etCorreo.getText().toString();
         String password = etPassword.getText().toString();
+
+        ModalError modal = new ModalError();
 
         //Si hay campos vacios muestro modal
         if (correo.isEmpty() || password.isEmpty()) {
@@ -100,7 +112,8 @@ public class Login extends AppCompatActivity {
             public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
                 //Si hago login correctamente, cambio de activity a dashboard
                 if (response.code() == 200) {
-                    change_activity_to_dashboard();
+                    LoginResult loginResult = response.body();
+                    change_activity_to_dashboard(loginResult.getToken(), correo);
 
                     //Correo no es esta registrado
                 } else if (response.code() == 404) {
@@ -130,18 +143,20 @@ public class Login extends AppCompatActivity {
     }
 
     //activity_login -> acivity_dashboard
-    private void change_activity_to_dashboard() {
+    private void change_activity_to_dashboard(String token, String correo) {
         Intent intent = new Intent(this, Dashboard.class);
+        intent.putExtra(TOKEN, token);
+        intent.putExtra(CORREO, correo);
         startActivity(intent);
     }
 
     private void open_modal(String mensaje) {
         dialogBuilder = new AlertDialog.Builder(this);
-        final View modalView = getLayoutInflater().inflate(R.layout.activity_error, null);
+        final View modalView = getLayoutInflater().inflate(R.layout.activity_modal_error, null);
 
         //View de los widgets del modal
-        btnAceptar = modalView.findViewById(R.id.btnAceptarError);
-        tvMensaje = modalView.findViewById(R.id.tvMensajeError);
+        btnAceptar = modalView.findViewById(R.id.btnAceptarModalError);
+        tvMensaje = modalView.findViewById(R.id.tvMensajeModalError);
 
         //Cambiamos el mensaje
         tvMensaje.setText(mensaje);

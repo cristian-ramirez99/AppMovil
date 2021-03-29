@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_theme"
+    tools:context=".modal.ModalProducto">
+
+
+    <ImageView
+        android:id="@+id/ivProductoModaProducto"
+        android:layout_width="136dp"
+        android:layout_height="136dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.218"
+        app:srcCompat="@android:drawable/ic_menu_gallery"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/tvMensajeModalProducto"
+        android:layout_width="270dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        android:text="Precio producto + cantidad producto"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivProductoModaProducto" />
+
+    <Button
+        android:id="@+id/btnAceptarModalProducto"
+        android:layout_width="185dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/btn_azul"
+        android:text="@string/btn_add_al_carrito"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.853"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMensajeModalProducto" />
+
+    <Button
+        android:id="@+id/btnCancelarModalProducto"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/btn_cancelar"
+        android:text="@string/btn_cancelar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.188"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMensajeModalProducto" />
+
+    <TextView
+        android:id="@+id/tvTituloModalProducto"
+        android:layout_width="292dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="72dp"
+        android:gravity="center"
+        android:text="Nombre producto"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

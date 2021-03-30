@@ -34,8 +34,10 @@ public class QRFragment extends Fragment {
 
     private Dialog dialog;
     private AlertDialog.Builder dialogBuilder;
-    private TextView tvMensaje;
+    private Button btnCancelar;
     private Button btnAceptar;
+    private TextView tvNombreProducto;
+    private TextView tvPrecioYDescripcionProducto;
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
@@ -56,6 +58,9 @@ public class QRFragment extends Fragment {
         token = intent.getStringExtra(Login.TOKEN);
 
         integrator.initiateScan();
+
+        open_modal_producto(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", "1233", 50));
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_q_r, container, false);
     }
@@ -107,29 +112,31 @@ public class QRFragment extends Fragment {
                 //Si todo ok peticion GETProducto
                 if (response.code() == 200) {
                     Producto producto = response.body();
-                    modalProducto(producto);
+                    open_modal_producto(producto);
                 }
             }
 
             @Override
             public void onFailure(Call<Producto> call, Throwable t) {
-                //No lo tengo claro, porque el modal no va
                 String mensaje = getString(R.string.error_conexion_DB);
-                open_modal(mensaje);
+                Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void open_modal(String mensaje) {
+    private void open_modal_producto(Producto producto) {
         dialogBuilder = new AlertDialog.Builder(getContext());
-        final View modalView = getLayoutInflater().inflate(R.layout.activity_modal_error, null);
+        final View modalView = getLayoutInflater().inflate(R.layout.activity_modal_producto, null);
 
         //View de los widgets del modal
-        btnAceptar = modalView.findViewById(R.id.btnAceptarModalError);
-        tvMensaje = modalView.findViewById(R.id.tvMensajeModalError);
+        btnAceptar = modalView.findViewById(R.id.btnAceptarModalProducto);
+        btnCancelar = modalView.findViewById(R.id.btnCancelarModalProducto);
+        tvNombreProducto = modalView.findViewById(R.id.tvTituloModalProducto);
+        tvPrecioYDescripcionProducto = modalView.findViewById(R.id.tvMensajeModalProducto);
 
-        //Cambiamos el mensaje
-        tvMensaje.setText(mensaje);
+        tvNombreProducto.setText(producto.nombre);
+        String precio = String.valueOf(producto.getPrecio());
+        tvPrecioYDescripcionProducto.setText(precio + "\u20ac \n" + producto.descripcion);
 
         //Cerra modal onClick
         btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -142,9 +149,5 @@ public class QRFragment extends Fragment {
         dialogBuilder.setView(modalView);
         dialog = dialogBuilder.create();
         dialog.show();
-    }
-
-    private void modalProducto(Producto producto) {
-
     }
 }

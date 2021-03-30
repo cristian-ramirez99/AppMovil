@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.core.graphics.drawable.IconCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sintesis.autenticado.Dashboard;
@@ -32,8 +33,15 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
     private List<Producto> productos;
     private ImageView ivBasura;
 
-    public ListaAdapter(List<Producto> itemList) {
+    final ListaAdapter.OnIconBasuraClickListener listener;
+
+    public interface OnIconBasuraClickListener {
+        void onClick(Producto producto);
+    }
+
+    public ListaAdapter(List<Producto> itemList, ListaAdapter.OnIconBasuraClickListener listener) {
         this.productos = itemList;
+        this.listener = listener;
     }
 
     @Override
@@ -44,16 +52,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
     @Override
     public ListaAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_productos, null, false);
-
         ivBasura = view.findViewById(R.id.ivBasuraListaProductos);
-
-        ivBasura.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Eliminar producto", Toast.LENGTH_SHORT).show();
-
-            }
-        });
 
         return new ListaAdapter.ViewHolder(view);
     }
@@ -81,6 +80,13 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
         void bindData(final Producto item) {
             nombre.setText(item.getNombre());
             precio.setText(String.valueOf(item.getPrecio() + "\u20ac"));
+
+            ivBasura.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onClick(item);
+                }
+            });
         }
     }
 }

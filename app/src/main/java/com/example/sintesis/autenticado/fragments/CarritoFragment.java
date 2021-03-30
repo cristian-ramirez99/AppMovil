@@ -63,7 +63,12 @@ public class CarritoFragment extends Fragment {
 
         llenarLista();
 
-        ListaAdapter adapter = new ListaAdapter(productos);
+        ListaAdapter adapter = new ListaAdapter(productos, new ListaAdapter.OnIconBasuraClickListener() {
+            @Override
+            public void onClick(Producto producto) {
+                open_modal_eliminar_producto();
+            }
+        });
         recyclerProductos.setAdapter(adapter);
         // open_modal_eliminar_producto();
         return vista;

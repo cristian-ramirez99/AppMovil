@@ -1,5 +1,7 @@
 package com.example.sintesis.autenticado.fragments;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,10 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.sintesis.ListaAdapter;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
+import com.example.sintesis.autenticado.Dashboard;
 import com.example.sintesis.auth.Login;
 import com.example.sintesis.models.Producto;
 
@@ -35,6 +41,12 @@ public class CarritoFragment extends Fragment {
     List<Producto> productos;
     RecyclerView recyclerProductos;
 
+    private Dialog dialog;
+    private AlertDialog.Builder dialogBuilder;
+    private Button btnCancelar;
+    private Button btnEliminarProducto;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,7 +65,7 @@ public class CarritoFragment extends Fragment {
 
         ListaAdapter adapter = new ListaAdapter(productos);
         recyclerProductos.setAdapter(adapter);
-
+        // open_modal_eliminar_producto();
         return vista;
     }
 
@@ -103,5 +115,33 @@ public class CarritoFragment extends Fragment {
                 //open_modal(mensaje);
             }
         });
+    }
+
+    private void open_modal_eliminar_producto() {
+        dialogBuilder = new AlertDialog.Builder(getContext());
+        final View modalView = getLayoutInflater().inflate(R.layout.activity_modal_eliminar_producto, null);
+
+        //View de los widgets del modal
+        btnEliminarProducto = modalView.findViewById(R.id.btnEliminarProductoModalEliminarProducto);
+        btnCancelar = modalView.findViewById(R.id.btnCancelarModalEliminarProducto);
+
+        //Cerra modal onClick
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnEliminarProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Producto eliminado", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        dialogBuilder.setView(modalView);
+        dialog = dialogBuilder.create();
+        dialog.show();
     }
 }

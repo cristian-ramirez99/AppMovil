@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Sintesis</string>
 
+
     <!--Titulos-->
     <string name="login">Iniciar sesión</string>
     <string name="crear_cuenta">Crear cuenta</string>
-
+    <string name="carrito">Carrito</string>
     <!--Mensaje-->
     <string name="tienes_cuenta">Ya tienes cuenta? </string>
 
@@ -12,6 +13,8 @@
     <string name="btn_no_account">No tienes cuenta? Registrate ahora</string>
     <string name="btn_registrar">Registrar</string>
     <string name="btn_aceptar">Aceptar</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="btn_add_al_carrito">Añadir al carrito</string>
 
     <!--Checkbox-->
     <string name="cb_aceptar_terminos">Acepta los terminos </string>
@@ -31,6 +34,4 @@
     <string name="error_correo_no_existe">Correo no registrado</string>
     <string name="error_password">Contraseña no válida</string>
     <string name="error_correo_existe">El correo ya esta registrado</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

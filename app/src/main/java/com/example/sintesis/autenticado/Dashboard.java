@@ -4,18 +4,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sintesis.ListaAdapter;
+import com.example.sintesis.ListaProductos;
 import com.example.sintesis.auth.Login;
 import com.example.sintesis.R;
 import com.example.sintesis.autenticado.fragments.CarritoFragment;
 import com.example.sintesis.autenticado.fragments.QRFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dashboard extends AppCompatActivity {
     Fragment carritoFragment = new CarritoFragment();
@@ -51,12 +60,12 @@ public class Dashboard extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.ic_qr:
                     loadFragment(QRFragment);
-                    Toast.makeText(Dashboard.this, token, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Dashboard.this, token, Toast.LENGTH_SHORT).show();
                     return true;
 
                 case R.id.ic_carrito:
                     loadFragment(carritoFragment);
-                    Toast.makeText(Dashboard.this, token, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Dashboard.this, token, Toast.LENGTH_SHORT).show();
                     return true;
 
                 case R.id.ic_signout:

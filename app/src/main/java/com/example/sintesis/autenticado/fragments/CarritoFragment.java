@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sintesis.ListaAdapter;
-import com.example.sintesis.ListaProductos;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
+import com.example.sintesis.models.Producto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class CarritoFragment extends Fragment {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
 
-    List<ListaProductos> productos;
+    List<Producto> productos;
     RecyclerView recyclerProductos;
 
     @Override
@@ -42,37 +42,20 @@ public class CarritoFragment extends Fragment {
 
         ListaAdapter adapter = new ListaAdapter(productos);
         recyclerProductos.setAdapter(adapter);
-        // init();
 
         return vista;
     }
-    private void llenarLista(){
+
+    private void llenarLista() {
         productos = new ArrayList<>();
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
+        productos.add(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", "1233", 50));
+        productos.add(new Producto("Ordenador Gayming", "Muy polivalente", 200, "no-image", "1234", 50));
+        productos.add(new Producto("Monitor Gayming", "Muy polivalente", 119.99, "no-image", "1235", 50));
+        productos.add(new Producto("Jesus Gayming", "Muy polivalente", 76, "no-image", "1236", 50));
+        productos.add(new Producto("Manuel Gayming", "Muy polivalente", 32, "no-image", "1237", 50));
+        productos.add(new Producto("Pepe Gayming", "Muy polivalente", 15, "no-image", "1238", 50));
 
     }
-   /* public void init() {
-        productos = new ArrayList<>();
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
-        productos.add(new ListaProductos("#121212", "Bobo", "Colombia", "Gay"));
-
-        ListaAdapter listaAdapter = new ListaAdapter(productos, getContext());
-        RecyclerView recyclerView = getView().findViewById(R.id.rcProductosCarrito);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(listaAdapter);
-    } */
 
     private void getProductos() {
     }

@@ -1,6 +1,5 @@
 package com.example.sintesis;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +9,20 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sintesis.models.Producto;
+
 import java.util.List;
 
 public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> {
-    private List<ListaProductos> mData;
+    private List<Producto> productos;
 
-    public ListaAdapter(List<ListaProductos> itemList) {
-        this.mData = itemList;
+    public ListaAdapter(List<Producto> itemList) {
+        this.productos = itemList;
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return productos.size();
     }
 
     @Override
@@ -32,29 +33,27 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final ListaAdapter.ViewHolder holder, final int position) {
-        holder.bindData(mData.get(position));
+        holder.bindData(productos.get(position));
     }
 
-    public void setItems(List<ListaProductos> items) {
-        mData = items;
+    public void setItems(List<Producto> items) {
+        productos = items;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iconImage;
-        TextView name, city, status;
+        TextView nombre, precio;
 
         ViewHolder(View itemView) {
             super(itemView);
-            iconImage = itemView.findViewById(R.id.iconImageView);
-            name = itemView.findViewById(R.id.nameTextView);
-            city = itemView.findViewById(R.id.cityTextView);
-            status = itemView.findViewById(R.id.statusTextView);
+            iconImage = itemView.findViewById(R.id.ivProductoListaProductos);
+            nombre = itemView.findViewById(R.id.tvNombreListaProductos);
+            precio = itemView.findViewById(R.id.tvPrecioListaProductos);
         }
 
-        void bindData(final ListaProductos item) {
-            name.setText(item.getName());
-            city.setText(item.getCity());
-            status.setText(item.getStatus());
+        void bindData(final Producto item) {
+            nombre.setText(item.getNombre());
+            precio.setText(String.valueOf(item.getPrecio() + "\u20ac"));
         }
     }
 }

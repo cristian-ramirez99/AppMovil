@@ -23,7 +23,7 @@
             android:padding="2dp">
 
             <ImageView
-                android:id="@+id/iconImageView"
+                android:id="@+id/ivProductoListaProductos"
                 android:layout_width="78dp"
                 android:layout_height="70dp"
                 android:layout_alignParentStart="true"
@@ -42,42 +42,41 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="4dp"
                 android:layout_marginTop="2dp"
-                android:layout_toEndOf="@+id/iconImageView"
-                android:layout_toRightOf="@+id/iconImageView"
+                android:layout_toEndOf="@+id/ivProductoListaProductos"
+                android:layout_toRightOf="@+id/ivProductoListaProductos"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/nameTextView"
+                    android:id="@+id/tvNombreListaProductos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
                     android:layout_marginBottom="2dp"
-                    android:text="Te me cuidas"
+                    android:text="Titulo"
                     android:textColor="@color/white"
-                    android:textSize="24sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/cityTextView"
+                    android:id="@+id/tvPrecioListaProductos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Almope trabajando"
+                    android:text="Precio"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/statusTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+            <ImageView
+                android:layout_width="78dp"
+                android:layout_height="70dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="6dp"
-                android:layout_marginRight="6dp"
-                android:text="Gay"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_gravity="center"
+                android:padding="16dp"
+                app:srcCompat="@drawable/ic_basura"
+                app:tint="@color/light_purple" />
 
         </RelativeLayout>
     </LinearLayout>

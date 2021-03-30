@@ -68,13 +68,14 @@
 
 
             <ImageView
-                android:layout_width="78dp"
-                android:layout_height="70dp"
+                android:id="@+id/ivBasuraListaProductos"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:padding="16dp"
+                android:padding="10dp"
                 app:srcCompat="@drawable/ic_basura"
                 app:tint="@color/light_purple" />
 

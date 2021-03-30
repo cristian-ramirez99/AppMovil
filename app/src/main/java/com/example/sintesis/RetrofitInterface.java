@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -27,5 +28,6 @@ public interface RetrofitInterface {
     @GET("producto/{id}")
     Call<Producto> getProducto(@Header("token") String token, @Path("id") String id);
 
-
+    @DELETE("carritoProducto/{id}")
+    Call<Void> deleteProducto(@Header("token") String token, @Path("id") String id);
 }

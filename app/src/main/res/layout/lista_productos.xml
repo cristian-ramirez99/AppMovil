@@ -47,12 +47,12 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvNombreListaProductos"
+                    android:id="@+id/tvNombreYCantidadListaProductos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
                     android:layout_marginBottom="2dp"
-                    android:text="Titulo"
+                    android:text="Titulo + Cantidad"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -61,7 +61,7 @@
                     android:id="@+id/tvPrecioListaProductos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Precio"
+                    android:text="Precio + Precio total"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
             </LinearLayout>

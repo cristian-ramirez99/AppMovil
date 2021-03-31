@@ -1,35 +1,21 @@
 package com.example.sintesis;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import androidx.core.graphics.drawable.IconCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sintesis.autenticado.Dashboard;
-import com.example.sintesis.auth.Login;
-import com.example.sintesis.auth.LoginResult;
 import com.example.sintesis.models.Producto;
 
-import java.util.HashMap;
+import java.text.DecimalFormat;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> {
+    private final String SIMBOLO_EURO = "\u20ac";
     private List<Producto> productos;
     private ImageView ivBasura;
 
@@ -68,18 +54,26 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iconImage;
-        TextView nombre, precio;
+        TextView nombreYCantidad, precioYPrecioTotal;
 
         ViewHolder(View itemView) {
             super(itemView);
             iconImage = itemView.findViewById(R.id.ivProductoListaProductos);
-            nombre = itemView.findViewById(R.id.tvNombreListaProductos);
-            precio = itemView.findViewById(R.id.tvPrecioListaProductos);
+            nombreYCantidad = itemView.findViewById(R.id.tvNombreYCantidadListaProductos);
+            precioYPrecioTotal = itemView.findViewById(R.id.tvPrecioListaProductos);
         }
 
         void bindData(final Producto item) {
-            nombre.setText(item.getNombre());
-            precio.setText(String.valueOf(item.getPrecio() + "\u20ac"));
+            nombreYCantidad.setText(item.getNombre() + " (" + item.cantidad + ")");
+
+            Double precioTotalProducto = calcularPrecioTotalProducto(item.getPrecio(), item.cantidad);
+
+            //Formato con dos decimales
+            DecimalFormat format = new DecimalFormat("#.00");// el numero de ceros despues del entero
+            String strPrecio = format.format(item.getPrecio());
+            String strPrecioTotalProducto = format.format(precioTotalProducto);
+
+            precioYPrecioTotal.setText(strPrecio + SIMBOLO_EURO + " - Total: " + strPrecioTotalProducto + SIMBOLO_EURO);
 
             ivBasura.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -88,6 +82,10 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
                 }
             });
         }
+    }
+
+    private double calcularPrecioTotalProducto(Double precio, int canitdad) {
+        return precio * canitdad;
     }
 }
 

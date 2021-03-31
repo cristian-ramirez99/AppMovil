@@ -6,9 +6,13 @@
     <string name="login">Iniciar sesión</string>
     <string name="crear_cuenta">Crear cuenta</string>
     <string name="carrito">Carrito</string>
+
     <!--Mensaje-->
     <string name="tienes_cuenta">Ya tienes cuenta? </string>
-    <string name="eliminar_producto">Estas seguro que quieres eliminar el producto?</string>
+    <string name="eliminar_producto">Estas seguro que quieres eliminar el producto</string>
+    <string name="precio_total">Precio total :</string>
+    <string name="producto_añadido">Producto añadido a su carrito</string>
+
     <!--Buttons-->
     <string name="btn_no_account">No tienes cuenta? Registrate ahora</string>
     <string name="btn_registrar">Registrar</string>
@@ -17,8 +21,12 @@
     <string name="btn_add">Añadir</string>
     <string name="btn_eliminar">Eliminar producto</string>
     <string name="btn_abrir_scanner_QR">Escanear QR</string>
+
     <!--Checkbox-->
     <string name="cb_aceptar_terminos">Acepta los terminos </string>
+
+    <!--InputDefault-->
+    <string name="cantidad_default">1</string>
 
     <!--Placeholder-->
     <string name="placeholder_correo">Introduce el correo</string>

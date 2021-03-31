@@ -16,13 +16,13 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_delete"
+        app:srcCompat="@drawable/ic_eliminar"
         app:tint="@color/danger" />
 
     <TextView
         android:id="@+id/tvMensajeModalEliminarProducto"
-        android:layout_width="270dp"
-        android:layout_height="51dp"
+        android:layout_width="340dp"
+        android:layout_height="62dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/eliminar_producto"

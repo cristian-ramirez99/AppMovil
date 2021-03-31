@@ -8,10 +8,14 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +26,8 @@ import com.example.sintesis.models.Producto;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.text.DecimalFormat;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +35,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class QRFragment extends Fragment {
+    private final String SIMBOLO_EURO = "\u20ac";
 
     public String token;
 
@@ -37,7 +44,11 @@ public class QRFragment extends Fragment {
     private Button btnCancelar;
     private Button btnAceptar;
     private TextView tvNombreProducto;
-    private TextView tvPrecioYDescripcionProducto;
+    private TextView tvPrecioProducto;
+    private EditText etCantidad;
+    private ImageView ivSuma;
+    private ImageView ivResta;
+    private TextView tvPrecioTotalProducto;
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
@@ -148,16 +159,112 @@ public class QRFragment extends Fragment {
         btnAceptar = modalView.findViewById(R.id.btnAceptarModalProducto);
         btnCancelar = modalView.findViewById(R.id.btnCancelarModalProducto);
         tvNombreProducto = modalView.findViewById(R.id.tvNombreProductoModalProducto);
-        tvPrecioYDescripcionProducto = modalView.findViewById(R.id.tvMensajeModalProducto);
+        tvPrecioProducto = modalView.findViewById(R.id.tvPrecioModalProducto);
+        tvPrecioTotalProducto = modalView.findViewById(R.id.tvPrecioTotalModalProducto);
+        etCantidad = modalView.findViewById(R.id.etCantidadModalProducto);
+        ivSuma = modalView.findViewById(R.id.ivSumaModalProducto);
+        ivResta = modalView.findViewById(R.id.ivRestaModalProducto);
 
         tvNombreProducto.setText(producto.nombre);
-        String precio = String.valueOf(producto.getPrecio());
-        tvPrecioYDescripcionProducto.setText(precio + "\u20ac");
 
+        //Formato con dos decimnales
+        DecimalFormat format = new DecimalFormat("#.00");// el numero de ceros despues del entero
+        String precio = format.format(producto.getPrecio());
+
+        tvPrecioProducto.setText(precio + SIMBOLO_EURO);
+
+        //Por default es el precio y el precio total es igual
+        tvPrecioTotalProducto.setText(precio + SIMBOLO_EURO);
+
+        etCantidad.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                try {
+                    //Obtner cantidad de View
+                    String strCantidad = etCantidad.getText().toString();
+
+                    //Str to int
+                    int nuevaCantidad = Integer.valueOf(strCantidad);
+
+                    //Calcular precioTotal
+                    Double precioTotalProducto = calcularPrecioTotalProducto(producto.getPrecio(), nuevaCantidad);
+
+                    //Darle formato de dos decimales
+                    String strPrecioTotalProducto = format.format(precioTotalProducto);
+
+                    //Cambiar el precioTotal en View
+                    tvPrecioTotalProducto.setText(strPrecioTotalProducto + SIMBOLO_EURO);
+
+                } catch (Exception e) {
+                    //Siempre tiene que tener como minimo 1 la cantidad
+                    etCantidad.setText("1");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        ivSuma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Obtner cantidad de View
+                String strCantidad = etCantidad.getText().toString();
+
+                //Parsear cantidad y sumar uno
+                int nuevaCantidad = Integer.valueOf(strCantidad) + 1;
+                String strNuevaCantidad = String.valueOf(nuevaCantidad);
+
+                //Cambiar la cantidad en View
+                etCantidad.setText(strNuevaCantidad);
+
+                //Calcular precioTotal
+                Double precioTotalProducto = calcularPrecioTotalProducto(producto.getPrecio(), nuevaCantidad);
+
+                //Darle formato de dos decimales
+                String strPrecioTotalProducto = format.format(precioTotalProducto);
+
+                //Cambiar el precioTotal en View
+                tvPrecioTotalProducto.setText(strPrecioTotalProducto + SIMBOLO_EURO);
+            }
+        });
+        ivResta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Obtner cantidad de View
+                String strCantidad = etCantidad.getText().toString();
+
+                if (!strCantidad.equals("1")) {
+
+                    //Parsear la cantidad y restar 1
+                    int nuevaCantidad = Integer.valueOf(strCantidad) - 1;
+                    String strNuevaCantidad = String.valueOf(nuevaCantidad);
+
+                    //Cambiar la cantidad en View
+                    etCantidad.setText(strNuevaCantidad);
+
+                    //Calcular precioTotal
+                    Double precioTotalProducto = calcularPrecioTotalProducto(producto.getPrecio(), nuevaCantidad);
+
+                    //Darle formato de dos decimales
+                    String strPrecioTotalProducto = format.format(precioTotalProducto);
+
+                    //Cambiar el precioTotal
+                    tvPrecioTotalProducto.setText(strPrecioTotalProducto + SIMBOLO_EURO);
+                }
+            }
+        });
         //Cerra modal onClick
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), R.string.producto_añadido, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
@@ -172,5 +279,9 @@ public class QRFragment extends Fragment {
         dialogBuilder.setView(modalView);
         dialog = dialogBuilder.create();
         dialog.show();
+    }
+
+    private double calcularPrecioTotalProducto(Double precio, int cantidad) {
+        return precio * cantidad;
     }
 }

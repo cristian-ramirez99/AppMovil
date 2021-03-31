@@ -25,6 +25,7 @@
         android:layout_width="300dp"
         android:layout_height="45dp"
         android:layout_marginTop="92dp"
+        android:backgroundTint="@color/light_purple"
         android:ems="10"
         android:hint="@string/placeholder_correo"
         android:inputType="textPersonName"
@@ -52,6 +53,7 @@
         android:layout_height="45dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="52dp"
+        app:tint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etCorreoLogin"
         app:srcCompat="@android:drawable/ic_lock_idle_lock" />
@@ -62,6 +64,7 @@
         android:layout_height="45dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="92dp"
+        app:tint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:srcCompat="@android:drawable/sym_action_email" />
@@ -71,6 +74,7 @@
         android:layout_width="300dp"
         android:layout_height="45dp"
         android:layout_marginTop="52dp"
+        android:backgroundTint="@color/light_purple"
         android:ems="10"
         android:hint="@string/placeholder_password"
         android:inputType="textPassword"

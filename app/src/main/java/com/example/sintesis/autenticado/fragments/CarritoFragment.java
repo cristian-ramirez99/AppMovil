@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sintesis.ListaAdapter;
@@ -45,43 +46,52 @@ public class CarritoFragment extends Fragment {
     private AlertDialog.Builder dialogBuilder;
     private Button btnCancelar;
     private Button btnEliminarProducto;
+    private TextView tvMensaje;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View vista = inflater.inflate(R.layout.fragment_carrito, container, false);
+        View vista;
 
+        llenarLista();
 
+        //Si carrito vacio
+        if (productos.size() == 0) {
+            vista = inflater.inflate(R.layout.fragment_carrito, container, false);
+
+        } else {
+            // Inflate the layout for this fragment
+            vista = inflater.inflate(R.layout.fragment_carrito, container, false);
+        }
+        
         Intent intent = getActivity().getIntent();
         token = intent.getStringExtra(Login.TOKEN);
+
 
         recyclerProductos = (RecyclerView) vista.findViewById(R.id.rcProductosCarrito);
         recyclerProductos.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        llenarLista();
-
         ListaAdapter adapter = new ListaAdapter(productos, new ListaAdapter.OnIconBasuraClickListener() {
             @Override
             public void onClick(Producto producto) {
-                open_modal_eliminar_producto();
+                open_modal_eliminar_producto(producto.nombre);
             }
         });
         recyclerProductos.setAdapter(adapter);
-        // open_modal_eliminar_producto();
         return vista;
     }
 
     private void llenarLista() {
         productos = new ArrayList<>();
-        productos.add(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", "1233", 50));
-        productos.add(new Producto("Ordenador Gayming", "Muy polivalente", 200, "no-image", "1234", 50));
-        productos.add(new Producto("Monitor Gayming", "Muy polivalente", 119.99, "no-image", "1235", 50));
-        productos.add(new Producto("Jesus Gayming", "Muy polivalente", 76, "no-image", "1236", 50));
-        productos.add(new Producto("Manuel Gayming", "Muy polivalente", 32, "no-image", "1237", 50));
-        productos.add(new Producto("Pepe Gayming", "Muy polivalente", 15, "no-image", "1238", 50));
+       /* productos.add(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", "1233", 5));
+        productos.add(new Producto("Ordenador Gayming", "Muy polivalente", 200, "no-image", "1234", 1));
+        productos.add(new Producto("Monitor Gayming", "Muy polivalente", 119.99, "no-image", "1235", 2));
+        productos.add(new Producto("Jesus Gayming", "Muy polivalente", 76, "no-image", "1236", 4));
+        productos.add(new Producto("Manuel Gayming", "Muy polivalente", 32, "no-image", "1237", 1));
+        productos.add(new Producto("Pepe Gayming", "Muy polivalente", 15, "no-image", "1238", 2));
+        */
 
     }
 
@@ -122,13 +132,16 @@ public class CarritoFragment extends Fragment {
         });
     }
 
-    private void open_modal_eliminar_producto() {
+    private void open_modal_eliminar_producto(String nombreProducto) {
         dialogBuilder = new AlertDialog.Builder(getContext());
         final View modalView = getLayoutInflater().inflate(R.layout.activity_modal_eliminar_producto, null);
 
         //View de los widgets del modal
         btnEliminarProducto = modalView.findViewById(R.id.btnEliminarProductoModalEliminarProducto);
         btnCancelar = modalView.findViewById(R.id.btnCancelarModalEliminarProducto);
+        tvMensaje = modalView.findViewById(R.id.tvMensajeModalEliminarProducto);
+
+        tvMensaje.append(" " + nombreProducto + "?");
 
         //Cerra modal onClick
         btnCancelar.setOnClickListener(new View.OnClickListener() {

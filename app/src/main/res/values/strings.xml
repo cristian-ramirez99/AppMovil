@@ -12,6 +12,7 @@
     <string name="eliminar_producto">Estas seguro que quieres eliminar el producto</string>
     <string name="precio_total">Precio total :</string>
     <string name="producto_añadido">Producto añadido a su carrito</string>
+    <string name="carrito_vacio">Tu carrito esta vacío, triste y solo :(</string>
 
     <!--Buttons-->
     <string name="btn_no_account">No tienes cuenta? Registrate ahora</string>

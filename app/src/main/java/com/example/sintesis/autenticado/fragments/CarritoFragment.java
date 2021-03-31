@@ -56,30 +56,31 @@ public class CarritoFragment extends Fragment {
 
         llenarLista();
 
-        //Si carrito vacio
+        //Si el carrito esta vacio, carga el fragment de carrito_vacio
         if (productos.size() == 0) {
-            vista = inflater.inflate(R.layout.fragment_carrito, container, false);
+            vista = inflater.inflate(R.layout.fragment_carrito_vacio, container, false);
 
+
+            //Si el carrito tiene productos, carga el fragment carrito
         } else {
             // Inflate the layout for this fragment
             vista = inflater.inflate(R.layout.fragment_carrito, container, false);
+
+            recyclerProductos = (RecyclerView) vista.findViewById(R.id.rcProductosCarrito);
+            recyclerProductos.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            ListaAdapter adapter = new ListaAdapter(productos, new ListaAdapter.OnIconBasuraClickListener() {
+                @Override
+                public void onClick(Producto producto) {
+                    open_modal_eliminar_producto(producto.nombre);
+                }
+            });
+            recyclerProductos.setAdapter(adapter);
         }
-        
+
         Intent intent = getActivity().getIntent();
         token = intent.getStringExtra(Login.TOKEN);
 
-
-        recyclerProductos = (RecyclerView) vista.findViewById(R.id.rcProductosCarrito);
-        recyclerProductos.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-        ListaAdapter adapter = new ListaAdapter(productos, new ListaAdapter.OnIconBasuraClickListener() {
-            @Override
-            public void onClick(Producto producto) {
-                open_modal_eliminar_producto(producto.nombre);
-            }
-        });
-        recyclerProductos.setAdapter(adapter);
         return vista;
     }
 
@@ -91,8 +92,8 @@ public class CarritoFragment extends Fragment {
         productos.add(new Producto("Jesus Gayming", "Muy polivalente", 76, "no-image", "1236", 4));
         productos.add(new Producto("Manuel Gayming", "Muy polivalente", 32, "no-image", "1237", 1));
         productos.add(new Producto("Pepe Gayming", "Muy polivalente", 15, "no-image", "1238", 2));
-        */
 
+*/
     }
 
     private void getProductos() {

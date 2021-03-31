@@ -14,9 +14,9 @@
     <string name="btn_registrar">Registrar</string>
     <string name="btn_aceptar">Aceptar</string>
     <string name="btn_cancelar">Cancelar</string>
-    <string name="btn_add_al_carrito">Añadir al carrito</string>
+    <string name="btn_add">Añadir</string>
     <string name="btn_eliminar">Eliminar producto</string>
-
+    <string name="btn_abrir_scanner_QR">Escanear QR</string>
     <!--Checkbox-->
     <string name="cb_aceptar_terminos">Acepta los terminos </string>
 

@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/FrameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_theme"
@@ -16,7 +17,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="100dp"
         android:src="@drawable/ic_qr"
         app:tint="@color/white" />
 
@@ -24,13 +25,23 @@
         android:id="@+id/textView"
         android:layout_width="358dp"
         android:layout_height="54dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="95dp"
         android:text="Lector de QR"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"/>
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnActivarScannerQR"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/btn_azul"
+        android:text="@string/btn_abrir_scanner_QR"
+        android:layout_marginTop="180dp"
+        app:tint="@color/light_purple" />
 
 
 </FrameLayout>

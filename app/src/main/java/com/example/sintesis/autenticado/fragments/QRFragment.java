@@ -43,26 +43,42 @@ public class QRFragment extends Fragment {
     private RetrofitInterface retrofitInterface;
     private String BASE_URL = "http://10.0.2.2:3000/api/";
 
+    private Button btn_abrir_scanner_QR;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_q_r, container, false);
+
+
+        Intent intent = getActivity().getIntent();
+        token = intent.getStringExtra(Login.TOKEN);
+
+        btn_abrir_scanner_QR = view.findViewById(R.id.btnActivarScannerQR);
+
+        btn_abrir_scanner_QR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initQR();
+            }
+        });
+
+
+        open_modal_producto(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", "1233", 50));
+
+        // Inflate the layout for this fragment
+        return view;
+    }
+
+    private void initQR() {
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(QRFragment.this);
 
         integrator.setOrientationLocked(false);
         integrator.setPrompt("Scan QR code");
         integrator.setBeepEnabled(false);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-
-
-        Intent intent = getActivity().getIntent();
-        token = intent.getStringExtra(Login.TOKEN);
-
         integrator.initiateScan();
-
-        open_modal_producto(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", "1233", 50));
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_q_r, container, false);
     }
 
     @Override
@@ -131,15 +147,22 @@ public class QRFragment extends Fragment {
         //View de los widgets del modal
         btnAceptar = modalView.findViewById(R.id.btnAceptarModalProducto);
         btnCancelar = modalView.findViewById(R.id.btnCancelarModalProducto);
-        tvNombreProducto = modalView.findViewById(R.id.tvTituloModalProducto);
+        tvNombreProducto = modalView.findViewById(R.id.tvNombreProductoModalProducto);
         tvPrecioYDescripcionProducto = modalView.findViewById(R.id.tvMensajeModalProducto);
 
         tvNombreProducto.setText(producto.nombre);
         String precio = String.valueOf(producto.getPrecio());
-        tvPrecioYDescripcionProducto.setText(precio + "\u20ac \n" + producto.descripcion);
+        tvPrecioYDescripcionProducto.setText(precio + "\u20ac");
 
         //Cerra modal onClick
         btnAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();

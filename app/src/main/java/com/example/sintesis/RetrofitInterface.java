@@ -1,10 +1,9 @@
 package com.example.sintesis;
 
 import com.example.sintesis.auth.LoginResult;
-import com.example.sintesis.models.Carrito;
 import com.example.sintesis.models.Producto;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -24,7 +23,7 @@ public interface RetrofitInterface {
     Call<Void> executeRegistrar(@Body HashMap<String, String> map);
 
     @GET("carrito")
-    Call<Carrito> getCarrito(@Header("x-token") String token, @Body int id);
+    Call<ArrayList<Producto>> getCarrito(@Header("x-token") String token);
 
     @GET("producto/{id}")
     Call<Producto> getProducto(@Header("x-token") String token, @Path("id") String id);
@@ -32,6 +31,4 @@ public interface RetrofitInterface {
     @DELETE("carritoProducto/{id}")
     Call<Void> deleteProducto(@Header("x-token") String token, @Path("id") String id);
 
-    @GET("/upload/productos/{img}")
-    Call<File> getImagenProducto(@Header("x-token") String token, @Path("img") String img);
 }

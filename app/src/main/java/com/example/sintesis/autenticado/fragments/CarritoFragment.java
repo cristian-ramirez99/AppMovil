@@ -13,14 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sintesis.ListaAdapter;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
-import com.example.sintesis.autenticado.Dashboard;
 import com.example.sintesis.auth.Login;
 import com.example.sintesis.models.Producto;
 
@@ -99,6 +97,37 @@ public class CarritoFragment extends Fragment {
     }
 
     private void getProductos() {
+        //Convertimos HTTP API in to interface de java
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //Crear interface
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
+
+        //Hace peticion @Get(/productos)
+        Call<ArrayList<Producto>> call = retrofitInterface.getCarrito(token);
+
+        call.enqueue(new Callback<ArrayList<Producto>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Producto>> call, Response<ArrayList<Producto>> response) {
+                if (response.code() == 200) {
+                    productos = response.body();
+
+                } else if (response.code() == 404) {
+                    String mensaje = getString(R.string.error_correo_no_existe);
+                    Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Producto>> call, Throwable t) {
+                //Si no se puede conectar al servidor
+                String mensaje = getString(R.string.error_conexion_DB);
+                Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void eliminarProducto() {

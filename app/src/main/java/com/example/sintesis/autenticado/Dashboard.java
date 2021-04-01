@@ -46,6 +46,9 @@ public class Dashboard extends AppCompatActivity {
 
         tvCorreo.setText(correo);
 
+        //Por defualt se carga QRFragment
+        loadFragment(QRFragment);
+
         //Navbar
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

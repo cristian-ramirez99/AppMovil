@@ -48,7 +48,6 @@ public class CarritoFragment extends Fragment {
     private Button btnEliminarProducto;
     private TextView tvMensaje;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,7 +58,6 @@ public class CarritoFragment extends Fragment {
         //Si el carrito esta vacio, carga el fragment de carrito_vacio
         if (productos.size() == 0) {
             vista = inflater.inflate(R.layout.fragment_carrito_vacio, container, false);
-
 
             //Si el carrito tiene productos, carga el fragment carrito
         } else {
@@ -86,14 +84,14 @@ public class CarritoFragment extends Fragment {
 
     private void llenarLista() {
         productos = new ArrayList<>();
-       /* productos.add(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", "1233", 5));
+        productos.add(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", "1233", 5));
         productos.add(new Producto("Ordenador Gayming", "Muy polivalente", 200, "no-image", "1234", 1));
         productos.add(new Producto("Monitor Gayming", "Muy polivalente", 119.99, "no-image", "1235", 2));
         productos.add(new Producto("Jesus Gayming", "Muy polivalente", 76, "no-image", "1236", 4));
         productos.add(new Producto("Manuel Gayming", "Muy polivalente", 32, "no-image", "1237", 1));
         productos.add(new Producto("Pepe Gayming", "Muy polivalente", 15, "no-image", "1238", 2));
 
-*/
+
     }
 
     private void getProductos() {

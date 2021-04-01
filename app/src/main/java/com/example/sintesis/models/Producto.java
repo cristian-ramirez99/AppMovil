@@ -2,6 +2,7 @@ package com.example.sintesis.models;
 
 
 public class Producto {
+    private String base_url = "http://10.0.2.2:3000/api/";
     public String nombre;
     public String descripcion;
     public double precio;
@@ -48,12 +49,17 @@ public class Producto {
     }
 
     public String getImg() {
-        return img;
+        if (img.isEmpty()) {
+            return base_url + "upload/usuarios/no-image.jpg";
+        } else {
+            return base_url + "upload/usuarios/" + img;
+        }
     }
 
     public void setImg(String img) {
         this.img = img;
     }
+
     public String getId() {
         return id;
     }

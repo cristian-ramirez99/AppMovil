@@ -32,8 +32,7 @@
                 android:layout_gravity="center"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
-                app:srcCompat="@drawable/ic_signout"
-                app:tint="@color/light_purple" />
+                app:srcCompat="@drawable/ic_signout" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -50,8 +49,8 @@
                     android:id="@+id/tvNombreYCantidadListaProductos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
                     android:layout_marginBottom="2dp"
+                    android:paddingTop="5dp"
                     android:text="Titulo + Cantidad"
                     android:textColor="@color/white"
                     android:textSize="18sp"

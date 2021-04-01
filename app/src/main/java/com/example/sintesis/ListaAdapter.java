@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.sintesis.models.Producto;
 
 import java.text.DecimalFormat;
@@ -16,8 +17,11 @@ import java.util.List;
 
 public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> {
     private final String SIMBOLO_EURO = "\u20ac";
+    private final String BASE_URL = "http://10.0.2.2:3000/api/";
+
     private List<Producto> productos;
     private ImageView ivBasura;
+
 
     final ListaAdapter.OnIconBasuraClickListener listener;
 
@@ -64,6 +68,8 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
         }
 
         void bindData(final Producto item) {
+            String url = BASE_URL + "upload/usuarios/56487648-6690-4a8d-b80e-2665c5539578.png";
+            Glide.with(itemView.getContext()).load(url).into(iconImage);
             nombreYCantidad.setText(item.getNombre() + " (" + item.cantidad + ")");
 
             Double precioTotalProducto = calcularPrecioTotalProducto(item.getPrecio(), item.cantidad);

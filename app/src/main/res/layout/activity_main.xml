@@ -16,6 +16,7 @@
         android:layout_marginStart="164dp"
         android:layout_marginTop="472dp"
         android:background="@color/dark_theme"
+        android:indeterminateTint="@color/light_purple"
         android:progressTint="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

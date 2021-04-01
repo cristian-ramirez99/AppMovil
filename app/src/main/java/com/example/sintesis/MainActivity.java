@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Espera unos segundos para cambiar de activity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         }, TIME_TO_CHANGE_ACTIVITY);
     }
 
-
+    //Inicia activity login
     private void change_activity_to_login() {
         Intent intent = new Intent(MainActivity.this, Login.class);
         startActivity(intent);

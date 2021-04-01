@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
 import com.example.sintesis.autenticado.Dashboard;
-import com.example.sintesis.modal.ModalError;
 
 import java.util.HashMap;
 
@@ -79,7 +78,6 @@ public class Login extends AppCompatActivity {
         String correo = etCorreo.getText().toString();
         String password = etPassword.getText().toString();
 
-        ModalError modal = new ModalError();
 
         //Si hay campos vacios muestro modal
         if (correo.isEmpty() || password.isEmpty()) {
@@ -136,13 +134,13 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    //activity_login -> acivity_registrar
+    //Inicia activity registrar
     private void change_activity_to_registrar() {
         Intent intent = new Intent(this, Registrar.class);
         startActivity(intent);
     }
 
-    //activity_login -> acivity_dashboard
+    //Inicia activity dashboard
     private void change_activity_to_dashboard(String token, String correo) {
         Intent intent = new Intent(this, Dashboard.class);
         intent.putExtra(TOKEN, token);
@@ -150,8 +148,11 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //Modal que muestra mensaje de error
     private void open_modal(String mensaje) {
         dialogBuilder = new AlertDialog.Builder(this);
+
+        //View del modal
         final View modalView = getLayoutInflater().inflate(R.layout.activity_modal_error, null);
 
         //View de los widgets del modal
@@ -169,6 +170,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        //Mostrar el modal
         dialogBuilder.setView(modalView);
         dialog = dialogBuilder.create();
         dialog.show();

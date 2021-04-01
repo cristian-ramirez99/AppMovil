@@ -74,12 +74,16 @@ public class QRFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_q_r, container, false);
 
-
+        //Instanciamos intent para obtener datos de anteriores intents
         Intent intent = getActivity().getIntent();
+
+        //Obtenemos token del usuarios
         token = intent.getStringExtra(Login.TOKEN);
 
+        //Obtnemos referencia de los widgets
         btn_abrir_scanner_QR = view.findViewById(R.id.btnActivarScannerQR);
 
+        //OnClik abrir escaner QR
         btn_abrir_scanner_QR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +98,7 @@ public class QRFragment extends Fragment {
         return view;
     }
 
+    //Inicia el escaner QR
     private void initQR() {
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(QRFragment.this);
 
@@ -113,6 +118,7 @@ public class QRFragment extends Fragment {
             if (result.getContents() == null) {
                 Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
             } else {
+                //Si el QR tiene el link de un producto nuestro
                 if (result.getContents().contains("http://localhost:4200/dashboard/producto/")) {
                     Toast.makeText(getContext(), "URL ok mi pana", Toast.LENGTH_LONG).show();
 
@@ -126,6 +132,7 @@ public class QRFragment extends Fragment {
                     getProducto(idProducto);
 
                 } else {
+                    //Si se lee un QR, pero no es un producto nuestro
                     Toast.makeText(getContext(), "Scanned : " + result.getContents(), Toast.LENGTH_LONG).show();
                 }
             }
@@ -178,6 +185,7 @@ public class QRFragment extends Fragment {
         ivResta = modalView.findViewById(R.id.ivRestaModalProducto);
         ivProducto = modalView.findViewById(R.id.ivProductoModaProducto);
 
+        //setImagen del producto
         String url = BASE_URL + "upload/usuarios/56487648-6690-4a8d-b80e-2665c5539578.png";
         Glide.with(getContext()).load(url).into(ivProducto);
 
@@ -187,11 +195,13 @@ public class QRFragment extends Fragment {
         DecimalFormat format = new DecimalFormat("#.00");// el numero de ceros despues del entero
         String precio = format.format(producto.getPrecio());
 
+        //setPrecio del producto
         tvPrecioProducto.setText(precio + SIMBOLO_EURO);
 
-        //Por default es el precio y el precio total es igual
+        //Por default el precio y el precio total es igual
         tvPrecioTotalProducto.setText(precio + SIMBOLO_EURO);
 
+        //Si la cantidad cambia actualizamos el precioTotal
         etCantidad.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -227,6 +237,7 @@ public class QRFragment extends Fragment {
             public void afterTextChanged(Editable s) {
             }
         });
+        //OnClick se suma uno a la cantidad y se actualiza el precioTotal
         ivSuma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -250,6 +261,8 @@ public class QRFragment extends Fragment {
                 tvPrecioTotalProducto.setText(strPrecioTotalProducto + SIMBOLO_EURO);
             }
         });
+
+        //OnClick se resta uno a la cantidad (si cantidad > 1) y se actualiza el precioTotal
         ivResta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -276,7 +289,7 @@ public class QRFragment extends Fragment {
                 }
             }
         });
-        //Cerra modal onClick
+        //OnClick en el btnAceptar añadimos el producto al carrito y cerramos modal
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -285,6 +298,7 @@ public class QRFragment extends Fragment {
             }
         });
 
+        //OnClick en btnCancelar cerra modal
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -292,11 +306,13 @@ public class QRFragment extends Fragment {
             }
         });
 
+        //Mostrar modal
         dialogBuilder.setView(modalView);
         dialog = dialogBuilder.create();
         dialog.show();
     }
 
+    //Devuelve el subtotal de un producto
     private double calcularPrecioTotalProducto(Double precio, int cantidad) {
         return precio * cantidad;
     }

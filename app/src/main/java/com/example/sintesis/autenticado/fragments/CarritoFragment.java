@@ -68,6 +68,7 @@ public class CarritoFragment extends Fragment {
             recyclerProductos.setLayoutManager(new LinearLayoutManager(getContext()));
 
             ListaAdapter adapter = new ListaAdapter(productos, new ListaAdapter.OnIconBasuraClickListener() {
+                //OnClick del icono Basura abrimos modal para eliminar producto
                 @Override
                 public void onClick(Producto producto) {
                     open_modal_eliminar_producto(producto.nombre);
@@ -76,7 +77,10 @@ public class CarritoFragment extends Fragment {
             recyclerProductos.setAdapter(adapter);
         }
 
+        //Instanciamos intent para obtener datos de anteriores intents
         Intent intent = getActivity().getIntent();
+
+        //Obtenemos token del usuario
         token = intent.getStringExtra(Login.TOKEN);
 
         return vista;
@@ -107,7 +111,7 @@ public class CarritoFragment extends Fragment {
         //Crear interface
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-        //Hace peticion @POST(/login)
+        //Hace peticion @Delete(/productos)
         Call<Void> call = retrofitInterface.deleteProducto(token, "12345");
 
         call.enqueue(new Callback<Void>() {
@@ -133,6 +137,8 @@ public class CarritoFragment extends Fragment {
 
     private void open_modal_eliminar_producto(String nombreProducto) {
         dialogBuilder = new AlertDialog.Builder(getContext());
+
+        //View del modal
         final View modalView = getLayoutInflater().inflate(R.layout.activity_modal_eliminar_producto, null);
 
         //View de los widgets del modal
@@ -142,13 +148,15 @@ public class CarritoFragment extends Fragment {
 
         tvMensaje.append(" " + nombreProducto + "?");
 
-        //Cerra modal onClick
+        //Cerrar modal onClick
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
+
+        //Eliminamos el producto y cerramos modal
         btnEliminarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,6 +165,7 @@ public class CarritoFragment extends Fragment {
             }
         });
 
+        //Mostrar modal
         dialogBuilder.setView(modalView);
         dialog = dialogBuilder.create();
         dialog.show();

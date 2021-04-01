@@ -25,12 +25,15 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
 
     final ListaAdapter.OnIconBasuraClickListener listener;
 
+    //Creamos interface OnClick para poder gestionarlo en CarritoFragment
     public interface OnIconBasuraClickListener {
         void onClick(Producto producto);
     }
 
     public ListaAdapter(List<Producto> itemList, ListaAdapter.OnIconBasuraClickListener listener) {
         this.productos = itemList;
+
+        //Pasamos el listener OnClick
         this.listener = listener;
     }
 
@@ -62,16 +65,22 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
 
         ViewHolder(View itemView) {
             super(itemView);
+
+            //Obtener referencia de los widgets
             iconImage = itemView.findViewById(R.id.ivProductoListaProductos);
             nombreYCantidad = itemView.findViewById(R.id.tvNombreYCantidadListaProductos);
             precioYPrecioTotal = itemView.findViewById(R.id.tvPrecioListaProductos);
         }
 
         void bindData(final Producto item) {
+            //setImagenProducto
             String url = BASE_URL + "upload/usuarios/56487648-6690-4a8d-b80e-2665c5539578.png";
             Glide.with(itemView.getContext()).load(url).into(iconImage);
+
+            //setNombreYCantidad
             nombreYCantidad.setText(item.getNombre() + " (" + item.cantidad + ")");
 
+            //Calculamos el subtotal por producto
             Double precioTotalProducto = calcularPrecioTotalProducto(item.getPrecio(), item.cantidad);
 
             //Formato con dos decimales
@@ -79,8 +88,10 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
             String strPrecio = format.format(item.getPrecio());
             String strPrecioTotalProducto = format.format(precioTotalProducto);
 
+            //setPrecioYPrecioTotal
             precioYPrecioTotal.setText(strPrecio + SIMBOLO_EURO + " - Total: " + strPrecioTotalProducto + SIMBOLO_EURO);
 
+            //OnClick del ImageView que tiene icono de basura
             ivBasura.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -90,6 +101,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
         }
     }
 
+    //Devuelve el precio * cantidad de un producto
     private double calcularPrecioTotalProducto(Double precio, int canitdad) {
         return precio * canitdad;
     }

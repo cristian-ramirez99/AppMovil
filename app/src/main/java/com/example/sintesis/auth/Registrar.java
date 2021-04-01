@@ -57,6 +57,7 @@ public class Registrar extends AppCompatActivity {
         cbTerminos = findViewById(R.id.cbTerminosRegistrar);
         btnRegistrar = findViewById(R.id.btnRegistrarRegistrar);
 
+        //Registrar onClick
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +65,7 @@ public class Registrar extends AppCompatActivity {
             }
         });
 
+        //Iniciar activity login onClick
         txtvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +90,7 @@ public class Registrar extends AppCompatActivity {
             open_modal(mensaje);
             return;
         }
+
         //Si las passwords no coinciden
         if (!password.equals(repetirPassword)) {
             String mensaje = getString(R.string.error_passwords_diferentes);
@@ -145,13 +148,17 @@ public class Registrar extends AppCompatActivity {
         });
     }
 
+    //Iniciar activity login
     private void change_activity_to_login() {
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
     }
 
+    //Modal que muestra mensaje de error
     private void open_modal(String mensaje) {
         dialogBuilder = new AlertDialog.Builder(this);
+
+        //View del modal
         final View modalView = getLayoutInflater().inflate(R.layout.activity_modal_error, null);
 
         //View de los widgets del modal
@@ -169,6 +176,7 @@ public class Registrar extends AppCompatActivity {
             }
         });
 
+        //Mostrar el modal
         dialogBuilder.setView(modalView);
         dialog = dialogBuilder.create();
         dialog.show();

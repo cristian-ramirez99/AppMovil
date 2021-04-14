@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.sintesis.models.LineaPedido;
 import com.example.sintesis.models.Producto;
 
 import java.text.DecimalFormat;
@@ -19,7 +20,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
     private final String SIMBOLO_EURO = "\u20ac";
     private final String BASE_URL = "http://10.0.2.2:3000/api/";
 
-    private List<Producto> productos;
+    private LineaPedido lineaPedidos[];
     private ImageView ivBasura;
 
 
@@ -27,11 +28,11 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
 
     //Creamos interface OnClick para poder gestionarlo en CarritoFragment
     public interface OnIconBasuraClickListener {
-        void onClick(Producto producto);
+        void onClick(LineaPedido lineaPedido);
     }
 
-    public ListaAdapter(List<Producto> itemList, ListaAdapter.OnIconBasuraClickListener listener) {
-        this.productos = itemList;
+    public ListaAdapter(LineaPedido[] itemList, ListaAdapter.OnIconBasuraClickListener listener) {
+        this.lineaPedidos = itemList;
 
         //Pasamos el listener OnClick
         this.listener = listener;
@@ -39,7 +40,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return productos.size();
+        return lineaPedidos.length;
     }
 
     @Override
@@ -52,11 +53,11 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final ListaAdapter.ViewHolder holder, final int position) {
-        holder.bindData(productos.get(position));
+        holder.bindData(lineaPedidos[position]);
     }
 
-    public void setItems(List<Producto> items) {
-        productos = items;
+    public void setItems(LineaPedido[] items) {
+        lineaPedidos = items;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -72,20 +73,20 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
             precioYPrecioTotal = itemView.findViewById(R.id.tvPrecioListaProductos);
         }
 
-        void bindData(final Producto item) {
+        void bindData(final LineaPedido item) {
             //setImagenProducto
             String url = BASE_URL + "upload/usuarios/56487648-6690-4a8d-b80e-2665c5539578.png";
             Glide.with(itemView.getContext()).load(url).into(iconImage);
 
             //setNombreYCantidad
-            nombreYCantidad.setText(item.getNombre() + " (" + item.cantidad + ")");
+            nombreYCantidad.setText(item.getProducto().getNombre() + " (" + item.getCantidadad() + ")");
 
             //Calculamos el subtotal por producto
-            Double precioTotalProducto = calcularPrecioTotalProducto(item.getPrecio(), item.cantidad);
+            Double precioTotalProducto = calcularPrecioTotalProducto(item.getProducto().getPrecio(), item.getCantidadad());
 
             //Formato con dos decimales
             DecimalFormat format = new DecimalFormat("#.00");// el numero de ceros despues del entero
-            String strPrecio = format.format(item.getPrecio());
+            String strPrecio = format.format(item.getProducto().getPrecio());
             String strPrecioTotalProducto = format.format(precioTotalProducto);
 
             //setPrecioYPrecioTotal

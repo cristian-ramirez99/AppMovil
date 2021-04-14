@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
@@ -133,6 +134,7 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
 
     //Inicia activity registrar
     private void change_activity_to_registrar() {

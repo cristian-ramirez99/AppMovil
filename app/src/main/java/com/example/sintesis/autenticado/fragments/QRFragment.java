@@ -92,7 +92,7 @@ public class QRFragment extends Fragment {
         });
 
 
-        open_modal_producto(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", "1233", 50));
+        open_modal_producto(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", "1233"));
 
         // Inflate the layout for this fragment
         return view;

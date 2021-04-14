@@ -20,6 +20,7 @@ import com.example.sintesis.ListaAdapter;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
 import com.example.sintesis.auth.Login;
+import com.example.sintesis.models.LineaPedido;
 import com.example.sintesis.models.Producto;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class CarritoFragment extends Fragment {
     private RetrofitInterface retrofitInterface;
 
     public String token;
-    List<Producto> productos;
+    LineaPedido lineaPedidos[];
     RecyclerView recyclerProductos;
 
     private Dialog dialog;
@@ -54,7 +55,7 @@ public class CarritoFragment extends Fragment {
         llenarLista();
 
         //Si el carrito esta vacio, carga el fragment de carrito_vacio
-        if (productos.size() == 0) {
+        if (lineaPedidos.length == 0) {
             vista = inflater.inflate(R.layout.fragment_carrito_vacio, container, false);
 
             //Si el carrito tiene productos, carga el fragment carrito
@@ -65,11 +66,11 @@ public class CarritoFragment extends Fragment {
             recyclerProductos = (RecyclerView) vista.findViewById(R.id.rcProductosCarrito);
             recyclerProductos.setLayoutManager(new LinearLayoutManager(getContext()));
 
-            ListaAdapter adapter = new ListaAdapter(productos, new ListaAdapter.OnIconBasuraClickListener() {
+            ListaAdapter adapter = new ListaAdapter(lineaPedidos, new ListaAdapter.OnIconBasuraClickListener() {
                 //OnClick del icono Basura abrimos modal para eliminar producto
                 @Override
-                public void onClick(Producto producto) {
-                    open_modal_eliminar_producto(producto.nombre);
+                public void onClick(LineaPedido lineaPedido) {
+                    open_modal_eliminar_producto(lineaPedido.getProducto().getNombre());
                 }
             });
             recyclerProductos.setAdapter(adapter);
@@ -85,14 +86,6 @@ public class CarritoFragment extends Fragment {
     }
 
     private void llenarLista() {
-        productos = new ArrayList<>();
-        productos.add(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", "1233", 5));
-        productos.add(new Producto("Ordenador Gayming", "Muy polivalente", 200, "no-image", "1234", 1));
-        productos.add(new Producto("Monitor Gayming", "Muy polivalente", 119.99, "no-image", "1235", 2));
-        productos.add(new Producto("Jesus Gayming", "Muy polivalente", 76, "no-image", "1236", 4));
-        productos.add(new Producto("Manuel Gayming", "Muy polivalente", 32, "no-image", "1237", 1));
-        productos.add(new Producto("Pepe Gayming", "Muy polivalente", 15, "no-image", "1238", 2));
-
 
     }
 
@@ -107,13 +100,13 @@ public class CarritoFragment extends Fragment {
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
         //Hace peticion @Get(/productos)
-        Call<ArrayList<Producto>> call = retrofitInterface.getCarrito(token);
+        Call<LineaPedido[]> call = retrofitInterface.getLineaPedido(token, "12");
 
-        call.enqueue(new Callback<ArrayList<Producto>>() {
+        call.enqueue(new Callback<LineaPedido[]>() {
             @Override
-            public void onResponse(Call<ArrayList<Producto>> call, Response<ArrayList<Producto>> response) {
+            public void onResponse(Call<LineaPedido[]> call, Response<LineaPedido[]> response) {
                 if (response.code() == 200) {
-                    productos = response.body();
+                    lineaPedidos = response.body();
 
                 } else if (response.code() == 404) {
                     String mensaje = getString(R.string.error_correo_no_existe);
@@ -122,7 +115,7 @@ public class CarritoFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Producto>> call, Throwable t) {
+            public void onFailure(Call<LineaPedido[]> call, Throwable t) {
                 //Si no se puede conectar al servidor
                 String mensaje = getString(R.string.error_conexion_DB);
                 Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();

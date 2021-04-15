@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +22,10 @@ import android.widget.Toast;
 import com.example.sintesis.ListaAdapter;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
+import com.example.sintesis.autenticado.Dashboard;
 import com.example.sintesis.auth.Login;
 import com.example.sintesis.models.LineaPedido;
+import com.example.sintesis.models.Pedido;
 import com.example.sintesis.models.Producto;
 
 import java.util.ArrayList;
@@ -38,7 +43,7 @@ public class CarritoFragment extends Fragment {
     private RetrofitInterface retrofitInterface;
 
     public String token;
-    LineaPedido lineaPedidos[];
+    LineaPedido lineaPedidos[] = new LineaPedido[1];
     RecyclerView recyclerProductos;
 
     private Dialog dialog;
@@ -47,12 +52,18 @@ public class CarritoFragment extends Fragment {
     private Button btnEliminarProducto;
     private TextView tvMensaje;
 
+    private String idPedido;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista;
-
         llenarLista();
+
+        Bundle args = getArguments();
+        idPedido = args.getString("idPedido");
+
+        getLineaPedidos();
 
         //Si el carrito esta vacio, carga el fragment de carrito_vacio
         if (lineaPedidos.length == 0) {
@@ -63,6 +74,13 @@ public class CarritoFragment extends Fragment {
             // Inflate the layout for this fragment
             vista = inflater.inflate(R.layout.fragment_carrito, container, false);
 
+
+            //Instanciamos intent para obtener datos de anteriores intents
+            Intent intent = getActivity().getIntent();
+
+            //Obtenemos token del usuario
+            token = intent.getStringExtra(Login.TOKEN);
+
             recyclerProductos = (RecyclerView) vista.findViewById(R.id.rcProductosCarrito);
             recyclerProductos.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -70,26 +88,20 @@ public class CarritoFragment extends Fragment {
                 //OnClick del icono Basura abrimos modal para eliminar producto
                 @Override
                 public void onClick(LineaPedido lineaPedido) {
-                    open_modal_eliminar_producto(lineaPedido.getProducto().getNombre());
+                    open_modal_eliminar_producto(lineaPedido);
                 }
             });
             recyclerProductos.setAdapter(adapter);
         }
 
-        //Instanciamos intent para obtener datos de anteriores intents
-        Intent intent = getActivity().getIntent();
-
-        //Obtenemos token del usuario
-        token = intent.getStringExtra(Login.TOKEN);
-
         return vista;
     }
 
     private void llenarLista() {
-
+        lineaPedidos[0] = new LineaPedido(2, new Producto("nombre", "descripcion", 20, "img", 20, "12"), "113s1", "12");
     }
 
-    private void getProductos() {
+    private void getLineaPedidos() {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -99,23 +111,24 @@ public class CarritoFragment extends Fragment {
         //Crear interface
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-        //Hace peticion @Get(/productos)
-        Call<LineaPedido[]> call = retrofitInterface.getLineaPedido(token, "12");
+        //Hace peticion @Get(/lineaPedidos)
+        Call<LineaPedidoResult> call = retrofitInterface.getLineaPedido(token, idPedido);
 
-        call.enqueue(new Callback<LineaPedido[]>() {
+        call.enqueue(new Callback<LineaPedidoResult>() {
             @Override
-            public void onResponse(Call<LineaPedido[]> call, Response<LineaPedido[]> response) {
+            public void onResponse(Call<LineaPedidoResult> call, Response<LineaPedidoResult> response) {
                 if (response.code() == 200) {
-                    lineaPedidos = response.body();
+                    System.out.println("Body: " + response.body());
+                    System.out.println("LineaPedidos: " + response.body().getLineaPedidos().toString());
+                    System.out.println("LineaPedidos: " + response.body().getLineaPedidos()[0].getProducto().getNombre());
+                    System.out.println("LineaPedidos: " + response.body().getLineaPedidos().length);
 
-                } else if (response.code() == 404) {
-                    String mensaje = getString(R.string.error_correo_no_existe);
-                    Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
+                    lineaPedidos = response.body().getLineaPedidos();
                 }
             }
 
             @Override
-            public void onFailure(Call<LineaPedido[]> call, Throwable t) {
+            public void onFailure(Call<LineaPedidoResult> call, Throwable t) {
                 //Si no se puede conectar al servidor
                 String mensaje = getString(R.string.error_conexion_DB);
                 Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
@@ -123,7 +136,7 @@ public class CarritoFragment extends Fragment {
         });
     }
 
-    private void eliminarProducto() {
+    private void eliminarProducto(String idLineaPedido) {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -133,31 +146,29 @@ public class CarritoFragment extends Fragment {
         //Crear interface
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-        //Hace peticion @Delete(/productos)
-        Call<Void> call = retrofitInterface.deleteProducto(token, "12345");
+        System.out.println("Delete: " + idLineaPedido);
+        //Hace peticion @Delete(/lineaPedidos)
+        Call<Void> call = retrofitInterface.deleteLineaPedido(token, idLineaPedido);
 
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 200) {
-
-
-                } else if (response.code() == 404) {
-                    String mensaje = getString(R.string.error_correo_no_existe);
-                    //open_modal(mensaje);
+                    System.out.println("Producto eliminado");
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 //Si no se puede conectar al servidor
+                System.out.println(t.getMessage());
                 String mensaje = getString(R.string.error_conexion_DB);
                 //open_modal(mensaje);
             }
         });
     }
 
-    private void open_modal_eliminar_producto(String nombreProducto) {
+    private void open_modal_eliminar_producto(LineaPedido lineaPedido) {
         dialogBuilder = new AlertDialog.Builder(getContext());
 
         //View del modal
@@ -168,7 +179,7 @@ public class CarritoFragment extends Fragment {
         btnCancelar = modalView.findViewById(R.id.btnCancelarModalEliminarProducto);
         tvMensaje = modalView.findViewById(R.id.tvMensajeModalEliminarProducto);
 
-        tvMensaje.append(" " + nombreProducto + "?");
+        tvMensaje.append(" " + lineaPedido.getProducto().getNombre() + "?");
 
         //Cerrar modal onClick
         btnCancelar.setOnClickListener(new View.OnClickListener() {
@@ -182,7 +193,20 @@ public class CarritoFragment extends Fragment {
         btnEliminarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Producto eliminado", Toast.LENGTH_SHORT).show();
+                eliminarProducto(lineaPedido.get_id());
+
+                Handler handler = new Handler();
+
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        getLineaPedidos();
+                    }
+                }, 150);   //0.5 seconds
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        actualizarFragment();
+                    }
+                }, 300);   //0.5 seconds
                 dialog.dismiss();
             }
         });
@@ -191,5 +215,17 @@ public class CarritoFragment extends Fragment {
         dialogBuilder.setView(modalView);
         dialog = dialogBuilder.create();
         dialog.show();
+    }
+
+    private void actualizarFragment() {
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = manager.beginTransaction();
+        Fragment newFragment = this;
+        this.onDestroy();
+        ft.remove(this);
+        ft.replace(R.id.frame_container, newFragment);
+        //container is the ViewGroup of current fragment
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

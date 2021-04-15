@@ -80,6 +80,11 @@ public class QRFragment extends Fragment {
         //Obtenemos token del usuarios
         token = intent.getStringExtra(Login.TOKEN);
 
+        Bundle args = getArguments();
+        String idPedido = args.getString("idPedido");
+
+        System.out.println("IDPedido: " + idPedido);
+
         //Obtnemos referencia de los widgets
         btn_abrir_scanner_QR = view.findViewById(R.id.btnActivarScannerQR);
 
@@ -92,7 +97,7 @@ public class QRFragment extends Fragment {
         });
 
 
-        open_modal_producto(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", "1233"));
+        open_modal_producto(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", 2, "1234"));
 
         // Inflate the layout for this fragment
         return view;
@@ -189,7 +194,7 @@ public class QRFragment extends Fragment {
         String url = BASE_URL + "upload/usuarios/56487648-6690-4a8d-b80e-2665c5539578.png";
         Glide.with(getContext()).load(url).into(ivProducto);
 
-        tvNombreProducto.setText(producto.nombre);
+        tvNombreProducto.setText(producto.getNombre());
 
         //Formato con dos decimnales
         DecimalFormat format = new DecimalFormat("#.00");// el numero de ceros despues del entero

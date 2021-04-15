@@ -1,5 +1,6 @@
 package com.example.sintesis;
 
+import com.example.sintesis.autenticado.fragments.LineaPedidoResult;
 import com.example.sintesis.autenticado.fragments.PedidoResult;
 import com.example.sintesis.auth.LoginResult;
 import com.example.sintesis.auth.RenewResult;
@@ -32,13 +33,13 @@ public interface RetrofitInterface {
     Call<Void> executeRegistrar(@Body HashMap<String, String> map);
 
     @POST("pedidos")
-    Call<Pedido> crearPedido(@Header("x-token") String token, @Body HashMap<String, String> map);
+    Call<PedidoResult> crearPedido(@Header("x-token") String token, @Body HashMap<String, String> map);
 
     @GET("pedidos/temp/{id}")
     Call<PedidoResult> getPedidoTemp(@Header("x-token") String token, @Path("id") String id);
 
     @GET("lineaPedidos/{id}")
-    Call<LineaPedido[]> getLineaPedido(@Header("x-token") String token, @Path("id") String id);
+    Call<LineaPedidoResult> getLineaPedido(@Header("x-token") String token, @Path("id") String id);
 
     @GET("productos/{id}")
     Call<Producto> getProducto(@Header("x-token") String token, @Path("id") String id);
@@ -47,7 +48,7 @@ public interface RetrofitInterface {
     Call<Void> crearLineaPedido(@Header("x-token") String token, @Path("id") String id);
 
     @DELETE("lineaPedidos/{id}")
-    Call<Void> deleteProducto(@Header("x-token") String token, @Path("id") String id);
+    Call<Void> deleteLineaPedido(@Header("x-token") String token, @Path("id") String id);
 
 
 }

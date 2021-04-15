@@ -1,25 +1,25 @@
 package com.example.sintesis.models;
 
 public class LineaPedido {
-    private int cantidadad;
+    private int cantidad;
     private Producto producto;
-    private Pedido string;
+    private String pedido;
     private String _id;
 
 
-    public LineaPedido(int cantidadad, Producto producto, Pedido string, String _id) {
-        this.cantidadad = cantidadad;
+    public LineaPedido(int cantidadad, Producto producto, String pedido, String _id) {
+        this.cantidad = cantidadad;
         this.producto = producto;
-        this.string = string;
+        this.pedido = pedido;
         this._id = _id;
     }
 
     public int getCantidadad() {
-        return cantidadad;
+        return cantidad;
     }
 
-    public void setCantidadad(int cantidadad) {
-        this.cantidadad = cantidadad;
+    public void setCantidadad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     public Producto getProducto() {
@@ -30,12 +30,12 @@ public class LineaPedido {
         this.producto = producto;
     }
 
-    public Pedido getString() {
-        return string;
+    public String getPedido() {
+        return pedido;
     }
 
-    public void setString(Pedido string) {
-        this.string = string;
+    public void setPedido(String pedido) {
+        this.pedido = pedido;
     }
 
     public String get_id() {

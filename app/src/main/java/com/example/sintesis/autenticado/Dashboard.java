@@ -6,12 +6,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sintesis.RetrofitInterface;
+import com.example.sintesis.autenticado.fragments.LineaPedidoResult;
 import com.example.sintesis.autenticado.fragments.PedidoResult;
 import com.example.sintesis.auth.Login;
 import com.example.sintesis.R;
@@ -22,6 +26,10 @@ import com.example.sintesis.models.LineaPedido;
 import com.example.sintesis.models.Pedido;
 import com.example.sintesis.models.Usuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +49,10 @@ public class Dashboard extends AppCompatActivity {
     public String token;
     public String uid;
     public String idPedido;
+    public LineaPedido lineaPedidos[];
+
     private TextView tvCorreo;
+
 
     @Override
 
@@ -63,17 +74,41 @@ public class Dashboard extends AppCompatActivity {
 
         tvCorreo.setText(correo);
 
-        //Por defualt se carga QRFragment
-        loadFragment(QRFragment);
-
         //Navbar
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        //Peticion GET para obtener uid
+        //peticion ("renew") para obtener uid del usuario
         renew(token);
 
-       // getPedidoTemp();
+        Handler handler = new Handler();
+
+        /*Esperamos 0,5 segundos para que acabe la peticion renew y asi poder obtener el pedido
+        temporal con el uid*/
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                getPedidoTemp();
+            }
+        }, 150);   //0.5 seconds
+
+
+           /*Esperamos 1 segundo para que acabe la peticion getPedidoTemp. Si pedidoTemp no existe
+             creamos nuevo pedido*/
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                if (idPedido == null) {
+                    crearPedido();
+                }
+            }
+        }, 300);   //0.5 seconds
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                //Por default se carga QRFragment
+                loadFragment(QRFragment);
+
+            }
+        }, 450);
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener
@@ -82,6 +117,7 @@ public class Dashboard extends AppCompatActivity {
         //Segun el item seleccionado en el navbar, inicia un fragment u otro
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
             switch (item.getItemId()) {
                 case R.id.ic_qr:
                     loadFragment(QRFragment);
@@ -112,14 +148,17 @@ public class Dashboard extends AppCompatActivity {
         //Hace peticion @GET(/pedidos/temp/{uid})
         Call<PedidoResult> call = retrofitInterface.getPedidoTemp(token, uid);
 
-        System.out.println("Hola : " + uid);
         call.enqueue(new Callback<PedidoResult>() {
             @Override
             public void onResponse(Call<PedidoResult> call, Response<PedidoResult> response) {
                 if (response.code() == 200) {
-                    System.out.println(response.body().getPedido().get_id());
-                    idPedido = response.body().getPedido().get_id();
-                    Toast.makeText(Dashboard.this, response.body().toString(), Toast.LENGTH_SHORT).show();
+                    try {
+                        idPedido = response.body().getPedido().get_id();
+                        System.out.println("IdPedido get: " + idPedido);
+                    } catch (Exception e) {
+                        System.out.println("No existe pedido temp");
+                    }
+
                 }
             }
 
@@ -149,8 +188,6 @@ public class Dashboard extends AppCompatActivity {
             public void onResponse(Call<RenewResult> call, Response<RenewResult> response) {
                 if (response.code() == 200) {
                     uid = response.body().getUsuario().getUid();
-                    System.out.println("UID:"+uid);
-                    Toast.makeText(Dashboard.this, response.body().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -162,10 +199,52 @@ public class Dashboard extends AppCompatActivity {
         });
     }
 
+    private void crearPedido() {
+        //Convertimos HTTP API in to interface de java
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //Crear interface
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("estado", "temporal");
+        map.put("usuario", uid);
+
+        //Hace peticion @POST(/pedidos)
+        Call<PedidoResult> call = retrofitInterface.crearPedido(token, map);
+
+        call.enqueue(new Callback<PedidoResult>() {
+            @Override
+            public void onResponse(Call<PedidoResult> call, Response<PedidoResult> response) {
+                if (response.code() == 200) {
+                    idPedido = response.body().getPedido().get_id();
+                    System.out.println("idPedido POST: " + idPedido);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PedidoResult> call, Throwable t) {
+                Toast.makeText(Dashboard.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+
     //Carga el fragment pasado por parametro
     public void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        Bundle args = new Bundle();
+        args.putString("idPedido", idPedido);
+
         transaction.replace(R.id.frame_container, fragment);
+
+        fragment.setArguments(args);
+
         transaction.commit();
     }
 

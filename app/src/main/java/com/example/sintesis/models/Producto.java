@@ -3,22 +3,32 @@ package com.example.sintesis.models;
 
 public class Producto {
     private String base_url = "http://10.0.2.2:3000/api/";
-    public String nombre;
-    public String descripcion;
-    public double precio;
-    public String img;
-    public String id;
+    private String nombre;
+    private String descripcion;
+    private double precio;
+    private String img;
+    private int stock;
+    private String id;
 
     public class TipoProducto {
         private String nombre;
         public String caracteristicas;
     }
 
-    public Producto(String nombre, String descripcion, double precio, String img, String id) {
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public Producto(String nombre, String descripcion, double precio, String img, int stock, String id) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.img = img;
+        this.stock = stock;
         this.id = id;
     }
 

@@ -12,24 +12,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sintesis.ListaAdapter;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
-import com.example.sintesis.autenticado.Dashboard;
 import com.example.sintesis.auth.Login;
 import com.example.sintesis.models.LineaPedido;
-import com.example.sintesis.models.Pedido;
 import com.example.sintesis.models.Producto;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +40,7 @@ public class CarritoFragment extends Fragment {
     private RetrofitInterface retrofitInterface;
 
     public String token;
-    LineaPedido lineaPedidos[] = new LineaPedido[1];
+    LineaPedido lineaPedidos[];
     RecyclerView recyclerProductos;
 
     private Dialog dialog;
@@ -58,28 +55,35 @@ public class CarritoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista;
-        llenarLista();
+
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        //Instanciamos intent para obtener datos de anteriores intents
+        Intent intent = getActivity().getIntent();
+
+        //Obtenemos token del usuario
+        token = intent.getStringExtra(Login.TOKEN);
 
         Bundle args = getArguments();
         idPedido = args.getString("idPedido");
 
-        getLineaPedidos();
+        try {
+            getLineaPedidos();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //Si el carrito esta vacio, carga el fragment de carrito_vacio
         if (lineaPedidos.length == 0) {
+            System.out.println("aaa");
             vista = inflater.inflate(R.layout.fragment_carrito_vacio, container, false);
 
             //Si el carrito tiene productos, carga el fragment carrito
         } else {
             // Inflate the layout for this fragment
             vista = inflater.inflate(R.layout.fragment_carrito, container, false);
-
-
-            //Instanciamos intent para obtener datos de anteriores intents
-            Intent intent = getActivity().getIntent();
-
-            //Obtenemos token del usuario
-            token = intent.getStringExtra(Login.TOKEN);
 
             recyclerProductos = (RecyclerView) vista.findViewById(R.id.rcProductosCarrito);
             recyclerProductos.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -101,7 +105,7 @@ public class CarritoFragment extends Fragment {
         lineaPedidos[0] = new LineaPedido(2, new Producto("nombre", "descripcion", 20, "img", 20, "12"), "113s1", "12");
     }
 
-    private void getLineaPedidos() {
+    private void getLineaPedidos() throws IOException {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -114,26 +118,7 @@ public class CarritoFragment extends Fragment {
         //Hace peticion @Get(/lineaPedidos)
         Call<LineaPedidoResult> call = retrofitInterface.getLineaPedido(token, idPedido);
 
-        call.enqueue(new Callback<LineaPedidoResult>() {
-            @Override
-            public void onResponse(Call<LineaPedidoResult> call, Response<LineaPedidoResult> response) {
-                if (response.code() == 200) {
-                    System.out.println("Body: " + response.body());
-                    System.out.println("LineaPedidos: " + response.body().getLineaPedidos().toString());
-                    System.out.println("LineaPedidos: " + response.body().getLineaPedidos()[0].getProducto().getNombre());
-                    System.out.println("LineaPedidos: " + response.body().getLineaPedidos().length);
-
-                    lineaPedidos = response.body().getLineaPedidos();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LineaPedidoResult> call, Throwable t) {
-                //Si no se puede conectar al servidor
-                String mensaje = getString(R.string.error_conexion_DB);
-                Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
-            }
-        });
+        lineaPedidos = call.execute().body().getLineaPedidos();
     }
 
     private void eliminarProducto(String idLineaPedido) {
@@ -195,18 +180,12 @@ public class CarritoFragment extends Fragment {
             public void onClick(View v) {
                 eliminarProducto(lineaPedido.get_id());
 
-                Handler handler = new Handler();
-
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        getLineaPedidos();
-                    }
-                }, 150);   //0.5 seconds
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        actualizarFragment();
-                    }
-                }, 300);   //0.5 seconds
+                try {
+                    getLineaPedidos();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                actualizarFragment();
                 dialog.dismiss();
             }
         });
@@ -224,7 +203,6 @@ public class CarritoFragment extends Fragment {
         this.onDestroy();
         ft.remove(this);
         ft.replace(R.id.frame_container, newFragment);
-        //container is the ViewGroup of current fragment
         ft.addToBackStack(null);
         ft.commit();
     }

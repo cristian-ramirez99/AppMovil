@@ -49,7 +49,6 @@ public class Dashboard extends AppCompatActivity {
     public String token;
     public String uid;
     public String idPedido;
-    public LineaPedido lineaPedidos[];
 
     private TextView tvCorreo;
 

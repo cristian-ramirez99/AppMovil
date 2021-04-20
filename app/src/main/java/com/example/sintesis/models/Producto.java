@@ -8,7 +8,7 @@ public class Producto {
     private double precio;
     private String img;
     private int stock;
-    private String id;
+    private String _id;
 
     public class TipoProducto {
         private String nombre;
@@ -23,13 +23,13 @@ public class Producto {
         this.stock = stock;
     }
 
-    public Producto(String nombre, String descripcion, double precio, String img, int stock, String id) {
+    public Producto(String nombre, String descripcion, double precio, String img, int stock, String _id) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.img = img;
         this.stock = stock;
-        this.id = id;
+        this._id = _id;
     }
 
     public String getNombre() {
@@ -69,10 +69,10 @@ public class Producto {
     }
 
     public String getId() {
-        return id;
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String _id) {
+        this._id = _id;
     }
 }

@@ -27,6 +27,7 @@ import com.example.sintesis.models.LineaPedido;
 import com.example.sintesis.models.Producto;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -121,7 +122,7 @@ public class CarritoFragment extends Fragment {
         lineaPedidos = call.execute().body().getLineaPedidos();
     }
 
-    private void eliminarProducto(String idLineaPedido) {
+    private void eliminarLineaPedido(String idLineaPedido) {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -153,6 +154,43 @@ public class CarritoFragment extends Fragment {
         });
     }
 
+    private void actualizarStock(LineaPedido lineaPedido) {
+        //Convertimos HTTP API in to interface de java
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //Crear interface
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
+
+
+        HashMap<String, Integer> map = new HashMap<>();
+        int stock = lineaPedido.getCantidadad() + lineaPedido.getProducto().getStock();
+        map.put("stock", stock);
+
+        System.out.println("Stock: "+stock);
+        System.out.println("IdProducto"+lineaPedido.getProducto().getId());
+
+        //Hace peticion @PUT(/productos)
+        Call<Void> call = retrofitInterface.actualizarStock(token, lineaPedido.getProducto().getId(), map);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 200) {
+                    System.out.println("Producto actualizado");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                //Si no se puede conectar al servidor
+                System.out.println(t.getMessage());
+            }
+        });
+    }
+
     private void open_modal_eliminar_producto(LineaPedido lineaPedido) {
         dialogBuilder = new AlertDialog.Builder(getContext());
 
@@ -178,7 +216,11 @@ public class CarritoFragment extends Fragment {
         btnEliminarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eliminarProducto(lineaPedido.get_id());
+                //Peticion que elimina lineaPedido
+                eliminarLineaPedido(lineaPedido.get_id());
+
+                //Peticion actualizarStock
+                actualizarStock(lineaPedido);
 
                 try {
                     getLineaPedidos();

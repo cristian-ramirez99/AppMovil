@@ -37,7 +37,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Dashboard extends AppCompatActivity {
+public class  Dashboard extends AppCompatActivity {
     //Instanciamos fragments
     Fragment carritoFragment = new CarritoFragment();
     Fragment QRFragment = new QRFragment();

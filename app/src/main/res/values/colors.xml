@@ -25,4 +25,5 @@
     <color name="warning">#FFC107</color>
     <color name="danger">#C62828</color>
     <color name="error">#CF6679</color>
+    <color name="info">#3B92EA</color>
 </resources>

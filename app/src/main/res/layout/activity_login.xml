@@ -9,16 +9,28 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="345dp"
+        android:layout_width="250dp"
         android:layout_height="66dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="44dp"
         android:gravity="center"
         android:text="@string/login"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="50sp"
-        app:layout_constraintEnd_toEndOf="@+id/etCorreoLogin"
+        android:textSize="36sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivInfoLogin"
+        android:layout_width="67dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="328dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_info"
+        app:tint="@color/info" />
 
     <EditText
         android:id="@+id/etCorreoLogin"

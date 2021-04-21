@@ -6,6 +6,7 @@
     <string name="login">Iniciar sesión</string>
     <string name="crear_cuenta">Crear cuenta</string>
     <string name="carrito">Carrito</string>
+    <string name="manual">Manual de usuario</string>
 
     <!--Mensaje-->
     <string name="tienes_cuenta">Ya tienes cuenta? </string>
@@ -22,6 +23,7 @@
     <string name="btn_add">Añadir</string>
     <string name="btn_eliminar">Eliminar producto</string>
     <string name="btn_abrir_scanner_QR">Escanear QR</string>
+    <string name="btn_volver">Volver</string>
 
     <!--Checkbox-->
     <string name="cb_aceptar_terminos">Acepta los terminos </string>

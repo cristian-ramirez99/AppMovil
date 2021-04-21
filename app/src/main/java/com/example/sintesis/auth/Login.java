@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sintesis.Info;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
 import com.example.sintesis.autenticado.Dashboard;
@@ -34,6 +37,7 @@ public class Login extends AppCompatActivity {
     private AlertDialog.Builder dialogBuilder;
     private TextView tvMensaje;
     private Button btnAceptar;
+    private ImageView ivInfo;
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
@@ -52,6 +56,14 @@ public class Login extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLoginLogin);
         etCorreo = findViewById(R.id.etCorreoLogin);
         etPassword = findViewById(R.id.etPasswordLogin);
+        ivInfo = findViewById(R.id.ivInfoLogin);
+
+        ivInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_activity_to_info();
+            }
+        });
 
         //Hacer login onClick
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +154,14 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //Inicia activity info
+    private void change_activity_to_info() {
+        Intent intent = new Intent(this, Info.class);
+
+        intent.putExtra("activity","login");
+
+        startActivity(intent);
+    }
     //Inicia activity dashboard
     private void change_activity_to_dashboard(String token, String correo) {
         Intent intent = new Intent(this, Dashboard.class);

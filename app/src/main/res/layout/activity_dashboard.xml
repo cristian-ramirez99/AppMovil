@@ -37,16 +37,14 @@
 
     <TextView
         android:id="@+id/tvCorreoDashboard"
-        android:layout_width="306dp"
+        android:layout_width="250dp"
         android:layout_height="35dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="TextView"
         android:textAlignment="textStart"
         android:textColor="@color/white"
-        android:textSize="19sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="parent" />
 

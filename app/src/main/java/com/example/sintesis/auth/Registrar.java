@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.sintesis.Info;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
 
@@ -37,7 +40,7 @@ public class Registrar extends AppCompatActivity {
     private AlertDialog.Builder dialogBuilder;
     private TextView tvMensaje;
     private Button btnAceptar;
-
+    private ImageView ivInfo;
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
@@ -56,6 +59,14 @@ public class Registrar extends AppCompatActivity {
         etRepetirPassword = findViewById(R.id.etRepetirPasswordRegistrar);
         cbTerminos = findViewById(R.id.cbTerminosRegistrar);
         btnRegistrar = findViewById(R.id.btnRegistrarRegistrar);
+        ivInfo = findViewById(R.id.ivInfoRegistrar);
+
+        ivInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_activity_to_info();
+            }
+        });
 
         //Registrar onClick
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +162,14 @@ public class Registrar extends AppCompatActivity {
     //Iniciar activity login
     private void change_activity_to_login() {
         Intent intent = new Intent(this, Login.class);
+        startActivity(intent);
+    }
+
+    //Inicia activity info
+    private void change_activity_to_info() {
+        Intent intent = new Intent(this, Info.class);
+        intent.putExtra("activity","registrar");
+
         startActivity(intent);
     }
 

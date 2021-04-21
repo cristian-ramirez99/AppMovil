@@ -6,30 +6,25 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sintesis.Info;
 import com.example.sintesis.RetrofitInterface;
-import com.example.sintesis.autenticado.fragments.LineaPedidoResult;
 import com.example.sintesis.autenticado.fragments.PedidoResult;
 import com.example.sintesis.auth.Login;
 import com.example.sintesis.R;
 import com.example.sintesis.autenticado.fragments.CarritoFragment;
 import com.example.sintesis.autenticado.fragments.QRFragment;
 import com.example.sintesis.auth.RenewResult;
-import com.example.sintesis.models.LineaPedido;
-import com.example.sintesis.models.Pedido;
-import com.example.sintesis.models.Usuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,7 +47,6 @@ public class  Dashboard extends AppCompatActivity {
 
     private TextView tvCorreo;
 
-
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +66,7 @@ public class  Dashboard extends AppCompatActivity {
         tvCorreo = findViewById(R.id.tvCorreoDashboard);
 
         tvCorreo.setText(correo);
+
 
         //Navbar
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);

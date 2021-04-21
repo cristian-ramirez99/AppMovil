@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> {
     private final String SIMBOLO_EURO = "\u20ac";
-    private final String BASE_URL = "http://10.0.2.2:3000/api/";
+    private final String BASE_URL = "https://yavadevs.herokuapp.com/api/";
 
     private LineaPedido lineaPedidos[];
     private ImageView ivBasura;

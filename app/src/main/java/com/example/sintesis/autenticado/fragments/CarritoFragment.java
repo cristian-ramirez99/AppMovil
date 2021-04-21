@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sintesis.ListaAdapter;
 import com.example.sintesis.R;
@@ -36,7 +37,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CarritoFragment extends Fragment {
-    private final String BASE_URL = "http://10.0.2.2:3000/api/";
+    private final String BASE_URL = "https://yavadevs.herokuapp.com/api/";
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
 
@@ -78,7 +79,6 @@ public class CarritoFragment extends Fragment {
 
         //Si el carrito esta vacio, carga el fragment de carrito_vacio
         if (lineaPedidos.length == 0) {
-            System.out.println("aaa");
             vista = inflater.inflate(R.layout.fragment_carrito_vacio, container, false);
 
             //Si el carrito tiene productos, carga el fragment carrito

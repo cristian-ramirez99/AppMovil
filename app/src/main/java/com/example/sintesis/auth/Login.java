@@ -41,7 +41,7 @@ public class Login extends AppCompatActivity {
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://10.0.2.2:3000/api/";
+    private String BASE_URL = "https://yavadevs.herokuapp.com/api/";
 
     public static final String TOKEN = "com.example.sintesis_20.auth.TOKEN";
     public static final String CORREO = "com.example.sintesis_20.auth.CORREO";

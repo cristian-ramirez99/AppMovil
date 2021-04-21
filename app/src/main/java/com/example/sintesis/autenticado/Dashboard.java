@@ -39,7 +39,7 @@ public class  Dashboard extends AppCompatActivity {
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://10.0.2.2:3000/api/";
+    private String BASE_URL = "https://yavadevs.herokuapp.com/api/";
 
     public String token;
     public String uid;
@@ -83,7 +83,7 @@ public class  Dashboard extends AppCompatActivity {
             public void run() {
                 getPedidoTemp();
             }
-        }, 150);   //0.5 seconds
+        }, 500);   //0.5 seconds
 
 
            /*Esperamos 1 segundo para que acabe la peticion getPedidoTemp. Si pedidoTemp no existe
@@ -94,7 +94,7 @@ public class  Dashboard extends AppCompatActivity {
                     crearPedido();
                 }
             }
-        }, 300);   //0.5 seconds
+        }, 1000);   //0.5 seconds
 
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -102,7 +102,7 @@ public class  Dashboard extends AppCompatActivity {
                 loadFragment(QRFragment);
 
             }
-        }, 450);
+        }, 1500);
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener

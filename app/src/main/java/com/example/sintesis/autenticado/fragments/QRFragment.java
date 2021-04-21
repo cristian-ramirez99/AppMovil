@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.sintesis.ProductoResult;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
 import com.example.sintesis.auth.Login;
@@ -48,6 +49,7 @@ public class QRFragment extends Fragment {
     private final String SIMBOLO_EURO = "\u20ac";
 
     public String token;
+    public String idPedido;
 
     private Dialog dialog;
     private AlertDialog.Builder dialogBuilder;
@@ -64,7 +66,7 @@ public class QRFragment extends Fragment {
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://10.0.2.2:3000/api/";
+    private String BASE_URL = "https://yavadevs.herokuapp.com/api/";
 
     private Button btn_abrir_scanner_QR;
 
@@ -81,9 +83,8 @@ public class QRFragment extends Fragment {
         token = intent.getStringExtra(Login.TOKEN);
 
         Bundle args = getArguments();
-        String idPedido = args.getString("idPedido");
-
-        System.out.println("IDPedido: " + idPedido);
+        idPedido = args.getString("idPedido");
+        System.out.println(idPedido);
 
         //Obtnemos referencia de los widgets
         btn_abrir_scanner_QR = view.findViewById(R.id.btnActivarScannerQR);
@@ -95,9 +96,6 @@ public class QRFragment extends Fragment {
                 initQR();
             }
         });
-
-
-        open_modal_producto(new Producto("Mouse Gayming", "Muy polivalente", 50.24, "no-image", 2, "1234"));
 
         // Inflate the layout for this fragment
         return view;
@@ -121,12 +119,9 @@ public class QRFragment extends Fragment {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() == null) {
-                Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 //Si el QR tiene el link de un producto nuestro
                 if (result.getContents().contains("http://localhost:4200/dashboard/producto/")) {
-                    Toast.makeText(getContext(), "URL ok mi pana", Toast.LENGTH_LONG).show();
-
                     //Obtenemos la posicion del ultimo '/' en el url que nos da el QR
                     int posicionUltimoSlash = result.getContents().lastIndexOf("/");
 
@@ -138,7 +133,7 @@ public class QRFragment extends Fragment {
 
                 } else {
                     //Si se lee un QR, pero no es un producto nuestro
-                    Toast.makeText(getContext(), "Scanned : " + result.getContents(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "El QR no pertenece a ningun producto", Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -155,20 +150,57 @@ public class QRFragment extends Fragment {
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
         //Hace peticion @GET Producto
-        Call<Producto> call = retrofitInterface.getProducto(token, idProducto);
+        Call<ProductoResult> call = retrofitInterface.getProducto(token, idProducto);
 
-        call.enqueue(new Callback<Producto>() {
+        call.enqueue(new Callback<ProductoResult>() {
             @Override
-            public void onResponse(Call<Producto> call, Response<Producto> response) {
+            public void onResponse(Call<ProductoResult> call, Response<ProductoResult> response) {
                 //Si todo ok peticion GETProducto
                 if (response.code() == 200) {
-                    Producto producto = response.body();
+                    Producto producto = response.body().getProducto();
                     open_modal_producto(producto);
                 }
             }
 
             @Override
-            public void onFailure(Call<Producto> call, Throwable t) {
+            public void onFailure(Call<ProductoResult> call, Throwable t) {
+                String mensaje = getString(R.string.error_conexion_DB);
+                Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void crearLineaPedido(String idProducto, String strCantidad) {
+        //Convertimos HTTP API in to interface de java
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //Crear interface
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
+        Toast.makeText(getContext(), "IdPEdido: " + idPedido, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "IdProducto: " + idProducto, Toast.LENGTH_SHORT).show();
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("producto", idProducto);
+        map.put("pedido", idPedido);
+        map.put("cantidad", strCantidad);
+
+        //Hace peticion @POST lineaPedido
+        Call<Void> call = retrofitInterface.crearLineaPedido(token, map);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                //Si todo ok peticion GETProducto
+                if (response.code() == 200) {
+                    Toast.makeText(getContext(), R.string.producto_añadido, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
                 String mensaje = getString(R.string.error_conexion_DB);
                 Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
             }
@@ -298,7 +330,9 @@ public class QRFragment extends Fragment {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), R.string.producto_añadido, Toast.LENGTH_SHORT).show();
+                String strCantidad = etCantidad.getText().toString();
+
+                crearLineaPedido(producto.getId(), strCantidad);
                 dialog.dismiss();
             }
         });

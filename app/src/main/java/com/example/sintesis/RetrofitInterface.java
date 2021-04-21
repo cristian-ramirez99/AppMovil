@@ -44,13 +44,13 @@ public interface RetrofitInterface {
     Call<LineaPedidoResult> getLineaPedido(@Header("x-token") String token, @Path("id") String id);
 
     @GET("productos/{id}")
-    Call<Producto> getProducto(@Header("x-token") String token, @Path("id") String id);
+    Call<ProductoResult> getProducto(@Header("x-token") String token, @Path("id") String id);
 
     @PUT("productos/{id}")
     Call<Void> actualizarStock(@Header("x-token") String token, @Path("id") String id, @Body HashMap<String, Integer> map);
 
     @POST("lineaPedidos")
-    Call<Void> crearLineaPedido(@Header("x-token") String token, @Path("id") String id);
+    Call<Void> crearLineaPedido(@Header("x-token") String token, @Body HashMap<String, String> map);
 
     @DELETE("lineaPedidos/{id}")
     Call<Void> deleteLineaPedido(@Header("x-token") String token, @Path("id") String id);

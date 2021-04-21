@@ -2,7 +2,7 @@ package com.example.sintesis.models;
 
 
 public class Producto {
-    private String base_url = "http://10.0.2.2:3000/api/";
+    private String base_url = "https://yavadevs.herokuapp.com/api/";
     private String nombre;
     private String descripcion;
     private double precio;

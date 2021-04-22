@@ -21,8 +21,8 @@
 
     <TextView
         android:id="@+id/tvMensajeModalEliminarProducto"
-        android:layout_width="340dp"
-        android:layout_height="62dp"
+        android:layout_width="258dp"
+        android:layout_height="67dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/eliminar_producto"
@@ -37,7 +37,7 @@
     <Button
         android:id="@+id/btnCancelarModalEliminarProducto"
         android:layout_width="120dp"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/btn_cancelar"
@@ -47,8 +47,8 @@
 
     <Button
         android:id="@+id/btnEliminarProductoModalEliminarProducto"
-        android:layout_width="195dp"
-        android:layout_height="50dp"
+        android:layout_width="154dp"
+        android:layout_height="55dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/danger"

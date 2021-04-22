@@ -10,9 +10,9 @@
     <TextView
         android:id="@+id/textView5"
         android:layout_width="250dp"
-        android:layout_height="66dp"
+        android:layout_height="53dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:gravity="center"
         android:text="@string/crear_cuenta"
         android:textAlignment="center"
@@ -23,10 +23,10 @@
 
     <ImageView
         android:id="@+id/ivInfoRegistrar"
-        android:layout_width="67dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="328dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="60dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="296dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_info"
@@ -34,10 +34,10 @@
 
     <Button
         android:id="@+id/btnRegistrarRegistrar"
-        android:layout_width="354dp"
+        android:layout_width="280dp"
         android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="84dp"
         android:backgroundTint="@color/btn_azul"
         android:text="@string/btn_registrar"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
         android:id="@+id/tvTienesCuentaRegistrar"
         android:layout_width="148dp"
         android:layout_height="28dp"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="36dp"
         android:gravity="center"
         android:text="@string/tienes_cuenta"
@@ -60,7 +60,7 @@
         android:id="@+id/tvLoginRegistrar"
         android:layout_width="124dp"
         android:layout_height="29dp"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
         android:gravity="center"
         android:text="@string/login"
@@ -71,8 +71,8 @@
 
     <EditText
         android:id="@+id/etNombreRegistrar"
-        android:layout_width="300dp"
-        android:layout_height="45dp"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
         android:layout_marginTop="32dp"
         android:backgroundTint="@color/light_purple"
         android:ems="10"
@@ -84,24 +84,10 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
-        android:id="@+id/etCorreoRegistrar"
-        android:layout_width="300dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/light_purple"
-        android:ems="10"
-        android:hint="@string/placeholder_correo"
-        android:inputType="textPersonName"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/ivCorreoRegistrar"
-        app:layout_constraintTop_toBottomOf="@+id/etNombreRegistrar" />
-
-    <EditText
         android:id="@+id/etPasswordRegistrar"
-        android:layout_width="300dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="@color/light_purple"
         android:ems="10"
         android:hint="@string/placeholder_password"
@@ -112,32 +98,43 @@
         app:layout_constraintTop_toBottomOf="@+id/etCorreoRegistrar" />
 
     <ImageView
-        android:id="@+id/ivContraseñaRegistrar"
+        android:id="@+id/ivNombreRegistrar"
         android:layout_width="50dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="30dp"
-        app:tint="@color/white"
+        android:layout_height="60dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCorreoRegistrar"
-        app:srcCompat="@android:drawable/ic_lock_idle_lock" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:srcCompat="@drawable/ic_usuario"
+        app:tint="@color/white" />
 
     <ImageView
-        android:id="@+id/ivRepetirContraseñaRegistrar"
+        android:id="@+id/ivContraseñaRegistrar"
         android:layout_width="50dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="30dp"
-        app:tint="@color/white"
+        android:layout_height="60dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPasswordRegistrar"
-        app:srcCompat="@android:drawable/ic_lock_idle_lock" />
+        app:layout_constraintTop_toBottomOf="@+id/etCorreoRegistrar"
+        app:srcCompat="@android:drawable/ic_lock_idle_lock"
+        app:tint="@color/white" />
+
+    <ImageView
+        android:id="@+id/ivCorreoRegistrar"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNombreRegistrar"
+        app:srcCompat="@android:drawable/sym_action_email"
+        app:tint="@color/white" />
 
     <EditText
         android:id="@+id/etRepetirPasswordRegistrar"
-        android:layout_width="300dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="@color/light_purple"
         android:ems="10"
         android:hint="@string/placeholder_repeat_password"
@@ -148,33 +145,36 @@
         app:layout_constraintTop_toBottomOf="@+id/etPasswordRegistrar" />
 
     <ImageView
-        android:id="@+id/ivCorreoRegistrar"
+        android:id="@+id/ivRepetirContraseñaRegistrar"
         android:layout_width="50dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="30dp"
-        app:tint="@color/white"
+        android:layout_height="60dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNombreRegistrar"
-        app:srcCompat="@android:drawable/sym_action_email" />
-
-    <ImageView
-        android:id="@+id/ivNombreRegistrar"
-        android:layout_width="50dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:srcCompat="@drawable/ic_usuario"
+        app:layout_constraintTop_toBottomOf="@+id/etPasswordRegistrar"
+        app:srcCompat="@android:drawable/ic_lock_idle_lock"
         app:tint="@color/white" />
+
+    <EditText
+        android:id="@+id/etCorreoRegistrar"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="@color/light_purple"
+        android:ems="10"
+        android:hint="@string/placeholder_correo"
+        android:inputType="textPersonName"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/ivCorreoRegistrar"
+        app:layout_constraintTop_toBottomOf="@+id/etNombreRegistrar" />
 
     <CheckBox
         android:id="@+id/cbTerminosRegistrar"
         android:layout_width="216dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
         android:text="@string/cb_aceptar_terminos"
         android:textColor="@color/white"
         android:textSize="18sp"

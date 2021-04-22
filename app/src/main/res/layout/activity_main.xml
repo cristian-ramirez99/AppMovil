@@ -8,25 +8,22 @@
     android:background="@color/dark_theme"
     >
 
-    <ProgressBar
-        android:id="@+id/pbCarga"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="102dp"
-        android:layout_height="79dp"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="472dp"
-        android:background="@color/dark_theme"
-        android:indeterminateTint="@color/light_purple"
-        android:progressTint="#FFFFFF"
+    <ImageView
+        android:id="@+id/ivTituloCarga"
+        android:layout_width="323dp"
+        android:layout_height="264dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/title" />
 
     <ImageView
         android:id="@+id/ivLogoCarga"
         android:layout_width="130dp"
         android:layout_height="121dp"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="264dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="248dp"
         android:rotation="-360"
         android:rotationX="-360"
         android:rotationY="-360"
@@ -34,14 +31,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/newlogo" />
 
-    <ImageView
-        android:id="@+id/ivTituloCarga"
-        android:layout_width="323dp"
-        android:layout_height="264dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="92dp"
+    <ProgressBar
+        android:id="@+id/pbCarga"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="102dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="460dp"
+        android:background="@color/dark_theme"
+        android:indeterminateTint="@color/light_purple"
+        android:progressTint="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,10 +9,10 @@
 
     <Button
         android:id="@+id/btnVolverInfo"
-        android:layout_width="340dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="280dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="68dp"
         android:backgroundTint="@color/btn_azul"
         android:text="@string/btn_volver"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,10 +20,11 @@
 
     <VideoView
         android:id="@+id/vvVideoInfo"
-        android:layout_width="357dp"
-        android:layout_height="244dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="112dp"
+        android:layout_width="328dp"
+        android:layout_height="163dp"
+        android:layout_marginTop="172dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,10 +32,10 @@
         android:id="@+id/textView2"
         android:layout_width="297dp"
         android:layout_height="52dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="60dp"
         android:gravity="center"
-        android:text="@string/manual"
+        android:text="@string/guia"
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"

@@ -12,21 +12,21 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="900px"
-        android:layout_height="1200px"
+        android:layout_width="278dp"
+        android:layout_height="400dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:src="@drawable/ic_qr"
         app:tint="@color/white" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="358dp"
-        android:layout_height="54dp"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="95dp"
+        android:layout_marginTop="50dp"
         android:text="Lector de QR"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -35,12 +35,12 @@
 
     <Button
         android:id="@+id/btnActivarScannerQR"
-        android:layout_width="300dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="200dp"
         android:backgroundTint="@color/btn_azul"
         android:text="@string/btn_abrir_scanner_QR"
-        android:layout_marginTop="180dp"
         app:tint="@color/light_purple" />
 
 

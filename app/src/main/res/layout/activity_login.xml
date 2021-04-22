@@ -11,22 +11,23 @@
         android:id="@+id/textView4"
         android:layout_width="250dp"
         android:layout_height="66dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="68dp"
         android:gravity="center"
         android:text="@string/login"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.307"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ivInfoLogin"
-        android:layout_width="67dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="328dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="60dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="296dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_info"
@@ -34,9 +35,9 @@
 
     <EditText
         android:id="@+id/etCorreoLogin"
-        android:layout_width="300dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="92dp"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="48dp"
         android:backgroundTint="@color/light_purple"
         android:ems="10"
         android:hint="@string/placeholder_correo"
@@ -44,47 +45,26 @@
         android:singleLine="false"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/etPasswordLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <Button
-        android:id="@+id/btnLoginLogin"
-        android:layout_width="340dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="108dp"
-        android:backgroundTint="@color/btn_azul"
-        android:text="@string/login"
-        app:iconTint="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/btnRegistrarLogin"
-        app:layout_constraintTop_toBottomOf="@+id/etPasswordLogin"
-        app:rippleColor="#FFFFFF" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="50dp"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="52dp"
-        app:tint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etCorreoLogin"
-        app:srcCompat="@android:drawable/ic_lock_idle_lock" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="50dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="92dp"
-        app:tint="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:srcCompat="@android:drawable/sym_action_email" />
+        app:srcCompat="@android:drawable/ic_lock_idle_lock"
+        app:tint="@color/white" />
 
     <EditText
         android:id="@+id/etPasswordLogin"
-        android:layout_width="300dp"
-        android:layout_height="45dp"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
         android:layout_marginTop="52dp"
         android:backgroundTint="@color/light_purple"
         android:ems="10"
@@ -92,19 +72,45 @@
         android:inputType="textPassword"
         android:textColor="#FFFFFF"
         android:textColorHint="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/btnLoginLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/etCorreoLogin" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:srcCompat="@android:drawable/sym_action_email"
+        app:tint="@color/white" />
 
     <Button
         android:id="@+id/btnRegistrarLogin"
-        android:layout_width="340dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="280dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="52dp"
         android:backgroundTint="@color/btn_amarillo"
         android:text="@string/btn_no_account"
         app:iconTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLoginLogin" />
+
+    <Button
+        android:id="@+id/btnLoginLogin"
+        android:layout_width="280dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="72dp"
+        android:backgroundTint="@color/btn_azul"
+        android:text="@string/login"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPasswordLogin"
+        app:rippleColor="#FFFFFF" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

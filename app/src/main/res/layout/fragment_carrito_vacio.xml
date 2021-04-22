@@ -7,11 +7,22 @@
     android:background="@color/dark_theme"
     tools:context=".autenticado.fragments.CarritoFragment">
 
+    <ImageView
+        android:id="@+id/ivCarritoCarritoVacio"
+        android:layout_width="189dp"
+        android:layout_height="129dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="152dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_carrito"
+        app:tint="@color/white" />
+
     <TextView
         android:id="@+id/tvMensajeCarritoVacio"
         android:layout_width="334dp"
         android:layout_height="108dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="52dp"
         android:text="@string/carrito_vacio"
         android:textAlignment="center"
@@ -19,16 +30,5 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivCarritoCarritoVacio" />
-
-    <ImageView
-        android:id="@+id/ivCarritoCarritoVacio"
-        android:layout_width="189dp"
-        android:layout_height="129dp"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="152dp"
-        app:tint="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_carrito" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

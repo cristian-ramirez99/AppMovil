@@ -1,8 +1,9 @@
 package com.example.sintesis.models;
 
 
+import com.example.sintesis.environments.Environments;
+
 public class Producto {
-    private String base_url = "https://yavadevs.herokuapp.com/api/";
     private String nombre;
     private String descripcion;
     private double precio;
@@ -58,9 +59,9 @@ public class Producto {
 
     public String getImg() {
         if (img.isEmpty()) {
-            return base_url + "upload/usuarios/no-image.jpg";
+            return Environments.BASE_URL + "upload/usuarios/no-image";
         } else {
-            return base_url + "upload/usuarios/" + img;
+            return Environments.BASE_URL + "uploads/productos/" + img;
         }
     }
 

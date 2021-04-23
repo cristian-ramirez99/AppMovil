@@ -261,8 +261,7 @@ public class QRFragment extends Fragment {
         ivProducto = modalView.findViewById(R.id.ivProductoModaProducto);
 
         //setImagen del producto
-        String url = Environments.BASE_URL + "upload/usuarios/56487648-6690-4a8d-b80e-2665c5539578.png";
-        Glide.with(getContext()).load(url).into(ivProducto);
+        Glide.with(getContext()).load(producto.getImg()).into(ivProducto);
 
         tvNombreProducto.setText(producto.getNombre());
 

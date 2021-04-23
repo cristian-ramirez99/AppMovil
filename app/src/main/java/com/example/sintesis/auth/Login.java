@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,11 +14,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sintesis.Info;
+import com.example.sintesis.environments.Environments;
+import com.example.sintesis.info.Info;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
 import com.example.sintesis.autenticado.Dashboard;
+import com.example.sintesis.results.LineaPedidoResult;
+import com.example.sintesis.results.LoginResult;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -36,12 +40,11 @@ public class Login extends AppCompatActivity {
     private Dialog dialog;
     private AlertDialog.Builder dialogBuilder;
     private TextView tvMensaje;
-    private Button btnAceptar;
+    private TextView tvPasswordOlvidada;
     private ImageView ivInfo;
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "https://yavadevs.herokuapp.com/api/";
 
     public static final String TOKEN = "com.example.sintesis_20.auth.TOKEN";
     public static final String CORREO = "com.example.sintesis_20.auth.CORREO";
@@ -51,12 +54,23 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         //Obtener referencia de los widgets
         btnRegistrar = findViewById(R.id.btnRegistrarLogin);
         btnLogin = findViewById(R.id.btnLoginLogin);
         etCorreo = findViewById(R.id.etCorreoLogin);
         etPassword = findViewById(R.id.etPasswordLogin);
         ivInfo = findViewById(R.id.ivInfoLogin);
+        tvPasswordOlvidada = findViewById(R.id.tvPasswordOlvidadaLogin);
+
+        tvPasswordOlvidada.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                open_modal_password_olvidadada();
+            }
+        });
 
         ivInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +115,7 @@ public class Login extends AppCompatActivity {
 
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Environments.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -158,20 +172,91 @@ public class Login extends AppCompatActivity {
     private void change_activity_to_info() {
         Intent intent = new Intent(this, Info.class);
 
-        intent.putExtra("activity","login");
+        intent.putExtra("activity", "login");
 
         startActivity(intent);
     }
+
     //Inicia activity dashboard
     private void change_activity_to_dashboard(String token, String correo) {
         Intent intent = new Intent(this, Dashboard.class);
         intent.putExtra(TOKEN, token);
         intent.putExtra(CORREO, correo);
         startActivity(intent);
+        finish();
+    }
+
+    private void open_modal_password_olvidadada() {
+        Button btnAceptar;
+        Button btnCancelar;
+        EditText etCorreo;
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        //View del modal
+        final View modalView = getLayoutInflater().inflate(R.layout.activity_modal_password_olvidada, null);
+
+        //View de los widgets del modal
+        btnAceptar = modalView.findViewById(R.id.btnAceptarModalPasswordOlvidada);
+        btnCancelar = modalView.findViewById(R.id.btnCancelarModalPasswordOlvidada);
+        etCorreo = modalView.findViewById(R.id.etEmailModalPasswordOlvidada);
+
+        //Cerra modal onClick
+        btnAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = etCorreo.getText().toString();
+                try {
+                    if (!email.isEmpty()) {
+                        recuperarPassword(email);
+                    }
+                } catch (IOException e) {
+                    Toast.makeText(Login.this, "Error al intentar recuperar la contraseña", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+        });
+
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        //Mostrar el modal
+        dialogBuilder.setView(modalView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+    }
+
+    private void recuperarPassword(String email) throws IOException {
+        //Convertimos HTTP API in to interface de java
+        retrofit = new Retrofit.Builder()
+                .baseUrl(Environments.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //Crear interface
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
+
+        HashMap<String, String> map = new HashMap<>();
+
+        //Body
+        map.put("email", email);
+
+        //Hace peticion para recuperar contraseña
+        Call<Void> call = retrofitInterface.recuperarPassword(map);
+
+        Toast.makeText(this, "En su correo electronico tendra su nueva contraseña", Toast.LENGTH_SHORT).show();
+
+        call.execute();
     }
 
     //Modal que muestra mensaje de error
     private void open_modal(String mensaje) {
+        Button btnAceptar;
+
         dialogBuilder = new AlertDialog.Builder(this);
 
         //View del modal

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.sintesis.Info;
+import com.example.sintesis.environments.Environments;
+import com.example.sintesis.info.Info;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
 
@@ -44,7 +44,6 @@ public class Registrar extends AppCompatActivity {
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "https://yavadevs.herokuapp.com/api/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +117,7 @@ public class Registrar extends AppCompatActivity {
 
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Environments.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

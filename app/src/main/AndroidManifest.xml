@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sintesis"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Info"></activity>
+        <activity android:name=".info.Info" />
         <activity android:name=".autenticado.Dashboard" />
         <activity android:name=".auth.Registrar" />
         <activity android:name=".auth.Login" />

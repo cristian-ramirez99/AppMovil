@@ -1,4 +1,4 @@
-package com.example.sintesis;
+package com.example.sintesis.results;
 
 import com.example.sintesis.models.Producto;
 

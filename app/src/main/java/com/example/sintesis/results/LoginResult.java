@@ -1,4 +1,4 @@
-package com.example.sintesis.auth;
+package com.example.sintesis.results;
 
 public class LoginResult {
     public String getToken() {

@@ -92,11 +92,12 @@
         android:id="@+id/btnRegistrarLogin"
         android:layout_width="280dp"
         android:layout_height="55dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="40dp"
         android:backgroundTint="@color/btn_amarillo"
         android:text="@string/btn_no_account"
         app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLoginLogin" />
 
@@ -112,5 +113,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPasswordLogin"
         app:rippleColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/tvPasswordOlvidadaLogin"
+        android:layout_width="226dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        android:text="@string/password_olvidada"
+        android:textColor="@color/azul_link"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegistrarLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

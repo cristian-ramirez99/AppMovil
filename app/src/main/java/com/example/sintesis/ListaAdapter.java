@@ -10,15 +10,13 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.sintesis.environments.Environments;
 import com.example.sintesis.models.LineaPedido;
-import com.example.sintesis.models.Producto;
 
 import java.text.DecimalFormat;
-import java.util.List;
 
 public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> {
     private final String SIMBOLO_EURO = "\u20ac";
-    private final String BASE_URL = "https://yavadevs.herokuapp.com/api/";
 
     private LineaPedido lineaPedidos[];
     private ImageView ivBasura;
@@ -75,7 +73,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
 
         void bindData(final LineaPedido item) {
             //setImagenProducto
-            String url = BASE_URL + "upload/usuarios/56487648-6690-4a8d-b80e-2665c5539578.png";
+            String url = Environments.BASE_URL + "upload/usuarios/56487648-6690-4a8d-b80e-2665c5539578.png";
             Glide.with(itemView.getContext()).load(url).into(iconImage);
 
             //setNombreYCantidad

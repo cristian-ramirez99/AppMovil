@@ -1,4 +1,4 @@
-package com.example.sintesis;
+package com.example.sintesis.info;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.example.sintesis.R;
 import com.example.sintesis.autenticado.Dashboard;
 import com.example.sintesis.auth.Login;
 import com.example.sintesis.auth.Registrar;

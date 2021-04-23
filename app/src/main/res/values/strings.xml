@@ -7,6 +7,7 @@
     <string name="crear_cuenta">Crear cuenta</string>
     <string name="carrito">Carrito de la compra</string>
     <string name="guia">Guia de usuario</string>
+    <string name="recuperar_password">Recuperación de la contraseña</string>
 
     <!--Mensaje-->
     <string name="tienes_cuenta">Ya tienes cuenta? </string>
@@ -14,6 +15,7 @@
     <string name="precio_total">Precio total :</string>
     <string name="producto_añadido">Producto añadido a su carrito</string>
     <string name="carrito_vacio">Tu carrito esta vacío, triste y solo :(</string>
+    <string name="password_olvidada">Has olvidado la contraseña?</string>
 
     <!--Buttons-->
     <string name="btn_no_account">No tienes cuenta? Registrate ahora</string>

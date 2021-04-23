@@ -11,21 +11,20 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.sintesis.environments.Environments;
 import com.example.sintesis.ListaAdapter;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
 import com.example.sintesis.auth.Login;
 import com.example.sintesis.models.LineaPedido;
-import com.example.sintesis.models.Producto;
+import com.example.sintesis.results.LineaPedidoResult;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -37,7 +36,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CarritoFragment extends Fragment {
-    private final String BASE_URL = "https://yavadevs.herokuapp.com/api/";
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
 
@@ -102,14 +100,10 @@ public class CarritoFragment extends Fragment {
         return vista;
     }
 
-    private void llenarLista() {
-        lineaPedidos[0] = new LineaPedido(2, new Producto("nombre", "descripcion", 20, "img", 20, "12"), "113s1", "12");
-    }
-
     private void getLineaPedidos() throws IOException {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Environments.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -125,7 +119,7 @@ public class CarritoFragment extends Fragment {
     private void eliminarLineaPedido(String idLineaPedido) {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Environments.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -157,7 +151,7 @@ public class CarritoFragment extends Fragment {
     private void actualizarStock(LineaPedido lineaPedido) {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Environments.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

@@ -9,19 +9,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sintesis.Info;
+import com.example.sintesis.environments.Environments;
 import com.example.sintesis.RetrofitInterface;
-import com.example.sintesis.autenticado.fragments.PedidoResult;
+import com.example.sintesis.results.PedidoResult;
 import com.example.sintesis.auth.Login;
 import com.example.sintesis.R;
 import com.example.sintesis.autenticado.fragments.CarritoFragment;
 import com.example.sintesis.autenticado.fragments.QRFragment;
-import com.example.sintesis.auth.RenewResult;
+import com.example.sintesis.results.RenewResult;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;
@@ -32,14 +30,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class  Dashboard extends AppCompatActivity {
+public class Dashboard extends AppCompatActivity {
     //Instanciamos fragments
     Fragment carritoFragment = new CarritoFragment();
     Fragment QRFragment = new QRFragment();
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "https://yavadevs.herokuapp.com/api/";
 
     public String token;
     public String uid;
@@ -74,6 +71,7 @@ public class  Dashboard extends AppCompatActivity {
 
         //peticion ("renew") para obtener uid del usuario
         renew(token);
+
 
         Handler handler = new Handler();
 
@@ -132,7 +130,7 @@ public class  Dashboard extends AppCompatActivity {
     private void getPedidoTemp() {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Environments.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -167,7 +165,7 @@ public class  Dashboard extends AppCompatActivity {
     private void renew(String token) {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Environments.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -196,7 +194,7 @@ public class  Dashboard extends AppCompatActivity {
     private void crearPedido() {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Environments.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

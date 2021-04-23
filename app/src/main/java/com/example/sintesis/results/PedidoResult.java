@@ -1,4 +1,4 @@
-package com.example.sintesis.autenticado.fragments;
+package com.example.sintesis.results;
 
 import com.example.sintesis.models.Pedido;
 

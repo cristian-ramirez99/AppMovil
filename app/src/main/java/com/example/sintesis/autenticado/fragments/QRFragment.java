@@ -3,11 +3,6 @@ package com.example.sintesis.autenticado.fragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.drawable.Icon;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -15,7 +10,6 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,16 +20,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.sintesis.ProductoResult;
+import com.example.sintesis.environments.Environments;
+import com.example.sintesis.results.ProductoResult;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
 import com.example.sintesis.auth.Login;
-import com.example.sintesis.auth.LoginResult;
 import com.example.sintesis.models.Producto;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.io.File;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
@@ -66,7 +59,6 @@ public class QRFragment extends Fragment {
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "https://yavadevs.herokuapp.com/api/";
 
     private Button btn_abrir_scanner_QR;
 
@@ -142,7 +134,7 @@ public class QRFragment extends Fragment {
     private void getProducto(String idProducto) {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Environments.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -173,7 +165,7 @@ public class QRFragment extends Fragment {
     private void crearLineaPedido(String idProducto, String strCantidad) {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Environments.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -223,7 +215,7 @@ public class QRFragment extends Fragment {
         ivProducto = modalView.findViewById(R.id.ivProductoModaProducto);
 
         //setImagen del producto
-        String url = BASE_URL + "upload/usuarios/56487648-6690-4a8d-b80e-2665c5539578.png";
+        String url = Environments.BASE_URL + "upload/usuarios/56487648-6690-4a8d-b80e-2665c5539578.png";
         Glide.with(getContext()).load(url).into(ivProducto);
 
         tvNombreProducto.setText(producto.getNombre());

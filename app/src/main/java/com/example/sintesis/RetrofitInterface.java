@@ -25,6 +25,9 @@ public interface RetrofitInterface {
     @GET("login/renew")
     Call<RenewResult> renew(@Header("x-token") String token);
 
+    @PUT("login/recuperarPassword")
+    Call<Void> recuperarPassword(@Body HashMap<String,String> map);
+
     @POST("usuarios")
     Call<Void> executeRegistrar(@Body HashMap<String, String> map);
 
@@ -48,8 +51,4 @@ public interface RetrofitInterface {
 
     @DELETE("lineaPedidos/{id}")
     Call<Void> deleteLineaPedido(@Header("x-token") String token, @Path("id") String id);
-
-    @PUT("recuperarPassword")
-    Call<Void> recuperarPassword(@Body HashMap<String,String> map);
-
 }

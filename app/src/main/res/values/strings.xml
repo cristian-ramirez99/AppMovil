@@ -48,4 +48,5 @@
     <string name="error_correo_no_existe">Correo no registrado</string>
     <string name="error_password">Contraseña no válida</string>
     <string name="error_correo_existe">El correo ya esta registrado</string>
+    <string name="error_stock_insuficiente">No queda stock suficiente para la cantidad seleccionada</string>
 </resources>

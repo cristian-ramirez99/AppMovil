@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.sintesis.environments.Environments;
+import com.example.sintesis.models.LineaPedido;
 import com.example.sintesis.results.ProductoResult;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
@@ -162,7 +163,51 @@ public class QRFragment extends Fragment {
         });
     }
 
-    private void crearLineaPedido(String idProducto, String strCantidad) {
+    private void crearLineaPedido(Producto producto, String strCantidad) {
+        int cantidadSeleccionada = Integer.valueOf(strCantidad);
+
+        if (producto.getStock() >= cantidadSeleccionada) {
+            //Convertimos HTTP API in to interface de java
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(Environments.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            //Crear interface
+            retrofitInterface = retrofit.create(RetrofitInterface.class);
+            Toast.makeText(getContext(), "IdPEdido: " + idPedido, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "IdProducto: " + producto.getId(), Toast.LENGTH_SHORT).show();
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("producto", producto.getId());
+            map.put("pedido", idPedido);
+            map.put("cantidad", strCantidad);
+
+            //Hace peticion @POST lineaPedido
+            Call<Void> call = retrofitInterface.crearLineaPedido(token, map);
+
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    //Si todo ok peticion GETProducto
+                    if (response.code() == 200) {
+                        Toast.makeText(getContext(), R.string.producto_añadido, Toast.LENGTH_SHORT).show();
+                        actualizarStock(producto, strCantidad);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    String mensaje = getString(R.string.error_conexion_DB);
+                    Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(getContext(), R.string.error_stock_insuficiente, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void actualizarStock(Producto producto, String strCantidad) {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
                 .baseUrl(Environments.BASE_URL)
@@ -171,30 +216,31 @@ public class QRFragment extends Fragment {
 
         //Crear interface
         retrofitInterface = retrofit.create(RetrofitInterface.class);
-        Toast.makeText(getContext(), "IdPEdido: " + idPedido, Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(), "IdProducto: " + idProducto, Toast.LENGTH_SHORT).show();
 
-        HashMap<String, String> map = new HashMap<>();
-        map.put("producto", idProducto);
-        map.put("pedido", idPedido);
-        map.put("cantidad", strCantidad);
+        int cantidadSeleccionada = Integer.valueOf(strCantidad);
 
-        //Hace peticion @POST lineaPedido
-        Call<Void> call = retrofitInterface.crearLineaPedido(token, map);
+        HashMap<String, Integer> map = new HashMap<>();
+        int stock = producto.getStock() - cantidadSeleccionada;
+        map.put("stock", stock);
+
+        System.out.println("Stock: " + stock);
+        System.out.println("IdProducto" + producto.getId());
+
+        //Hace peticion @PUT(/productos)
+        Call<Void> call = retrofitInterface.actualizarStock(token, producto.getId(), map);
 
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                //Si todo ok peticion GETProducto
                 if (response.code() == 200) {
-                    Toast.makeText(getContext(), R.string.producto_añadido, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Stock actualizado", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                String mensaje = getString(R.string.error_conexion_DB);
-                Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
+                //Si no se puede conectar al servidor
+                System.out.println(t.getMessage());
             }
         });
     }
@@ -324,7 +370,7 @@ public class QRFragment extends Fragment {
             public void onClick(View v) {
                 String strCantidad = etCantidad.getText().toString();
 
-                crearLineaPedido(producto.getId(), strCantidad);
+                crearLineaPedido(producto, strCantidad);
                 dialog.dismiss();
             }
         });

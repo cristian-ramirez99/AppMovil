@@ -16,6 +16,7 @@
     <string name="producto_añadido">Producto añadido a su carrito</string>
     <string name="carrito_vacio">Tu carrito esta vacío, triste y solo :(</string>
     <string name="password_olvidada">Has olvidado la contraseña?</string>
+    <string name="sin_stock">No queda stock :(</string>
 
     <!--Buttons-->
     <string name="btn_no_account">No tienes cuenta? Registrate ahora</string>

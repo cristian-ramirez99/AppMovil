@@ -20,38 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
 
-    <Button
-        android:id="@+id/btnAceptarModalProducto"
-        android:layout_width="120dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/btn_azul"
-        android:text="@string/btn_add"
-        app:layout_constraintStart_toEndOf="@+id/btnCancelarModalProducto"
-        app:layout_constraintTop_toBottomOf="@+id/tvPrecioTotalModalProducto" />
-
-    <Button
-        android:id="@+id/btnCancelarModalProducto"
-        android:layout_width="120dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/btn_cancelar"
-        android:text="@string/btn_cancelar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPrecioTotalModalProducto" />
-
-    <TextView
-        android:id="@+id/tvDejarMarginModalError3"
-        android:layout_width="341dp"
-        android:layout_height="13dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.642"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAceptarModalProducto" />
-
     <TextView
         android:id="@+id/tvPrecioModalProducto"
         android:layout_width="324dp"
@@ -81,24 +49,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivProductoModaProducto" />
 
-    <ImageView
-        android:id="@+id/ivRestaModalProducto"
-        android:layout_width="30dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="40dp"
-        android:background="@color/light_purple"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPrecioModalProducto"
-        app:srcCompat="@drawable/ic_menos"
-        app:tint="@color/dark_theme" />
-
     <EditText
         android:id="@+id/etCantidadModalProducto"
         android:layout_width="60dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="44dp"
         android:backgroundTint="@color/white"
         android:ems="10"
         android:inputType="number"
@@ -112,38 +68,97 @@
         android:id="@+id/ivSumaModalProducto"
         android:layout_width="30dp"
         android:layout_height="25dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="60dp"
         android:background="@color/light_purple"
         app:layout_constraintStart_toEndOf="@+id/etCantidadModalProducto"
         app:layout_constraintTop_toBottomOf="@+id/tvPrecioModalProducto"
         app:srcCompat="@drawable/ic_suma"
         app:tint="@color/dark_theme" />
 
+    <ImageView
+        android:id="@+id/ivRestaModalProducto"
+        android:layout_width="30dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="60dp"
+        android:background="@color/light_purple"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrecioModalProducto"
+        app:srcCompat="@drawable/ic_menos"
+        app:tint="@color/dark_theme" />
+
+    <Button
+        android:id="@+id/btnCancelarModalProducto"
+        android:layout_width="120dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/btn_cancelar"
+        android:text="@string/btn_cancelar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrecioTotalModalProducto" />
+
     <TextView
         android:id="@+id/tvPrecioTotal"
         android:layout_width="108dp"
         android:layout_height="25dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text="@string/precio_total"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etCantidadModalProducto" />
 
+    <Button
+        android:id="@+id/btnAceptarModalProducto"
+        android:layout_width="120dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/btn_azul"
+        android:text="@string/btn_add"
+        app:layout_constraintStart_toEndOf="@+id/btnCancelarModalProducto"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrecioTotalModalProducto" />
+
     <TextView
         android:id="@+id/tvPrecioTotalModalProducto"
         android:layout_width="152dp"
         android:layout_height="25dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text="Double precio total "
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.013"
+        app:layout_constraintHorizontal_bias="0.019"
         app:layout_constraintStart_toEndOf="@+id/tvPrecioTotal"
         app:layout_constraintTop_toBottomOf="@+id/etCantidadModalProducto" />
+
+    <TextView
+        android:id="@+id/tvDejarMarginModalError3"
+        android:layout_width="341dp"
+        android:layout_height="13dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.642"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAceptarModalProducto" />
+
+    <TextView
+        android:id="@+id/tvStockModalProducto"
+        android:layout_width="238dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/sin_stock"
+        android:textAlignment="textStart"
+        android:textColor="@color/danger"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrecioModalProducto"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

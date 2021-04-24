@@ -58,10 +58,14 @@ public class Producto {
     }
 
     public String getImg() {
-        if (img.isEmpty()) {
+        try {
+            if (img.isEmpty()) {
+                return Environments.BASE_URL + "upload/usuarios/no-image";
+            } else {
+                return Environments.BASE_URL + "uploads/productos/" + img;
+            }
+        }catch (NullPointerException e){
             return Environments.BASE_URL + "upload/usuarios/no-image";
-        } else {
-            return Environments.BASE_URL + "uploads/productos/" + img;
         }
     }
 

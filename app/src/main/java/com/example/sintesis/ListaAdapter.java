@@ -73,7 +73,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
 
         void bindData(final LineaPedido item) {
             //setImagenProducto
-            String url = Environments.BASE_URL + "upload/usuarios/56487648-6690-4a8d-b80e-2665c5539578.png";
+            String url = item.getProducto().getImg();
             Glide.with(itemView.getContext()).load(url).into(iconImage);
 
             //setNombreYCantidad

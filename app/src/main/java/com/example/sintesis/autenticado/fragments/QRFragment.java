@@ -50,6 +50,7 @@ public class QRFragment extends Fragment {
 
     private Button btnCancelar;
     private Button btnAceptar;
+    private TextView tvStock;
     private TextView tvNombreProducto;
     private TextView tvPrecioProducto;
     private TextView tvPrecioTotalProducto;
@@ -252,6 +253,7 @@ public class QRFragment extends Fragment {
         //View de los widgets del modal
         btnAceptar = modalView.findViewById(R.id.btnAceptarModalProducto);
         btnCancelar = modalView.findViewById(R.id.btnCancelarModalProducto);
+        tvStock = modalView.findViewById(R.id.tvStockModalProducto);
         tvNombreProducto = modalView.findViewById(R.id.tvNombreProductoModalProducto);
         tvPrecioProducto = modalView.findViewById(R.id.tvPrecioModalProducto);
         tvPrecioTotalProducto = modalView.findViewById(R.id.tvPrecioTotalModalProducto);
@@ -259,13 +261,20 @@ public class QRFragment extends Fragment {
         ivSuma = modalView.findViewById(R.id.ivSumaModalProducto);
         ivResta = modalView.findViewById(R.id.ivRestaModalProducto);
         ivProducto = modalView.findViewById(R.id.ivProductoModaProducto);
+        
+        if (producto.getStock() > 0) {
+            tvStock.setVisibility(View.INVISIBLE);
+        }
+
+        String url = producto.getImg();
+        Toast.makeText(getContext(), url, Toast.LENGTH_SHORT).show();
 
         //setImagen del producto
-        Glide.with(getContext()).load(producto.getImg()).into(ivProducto);
+        Glide.with(getContext()).load(url).into(ivProducto);
 
         tvNombreProducto.setText(producto.getNombre());
 
-        //Formato con dos decimnales
+        //Formato con dos decimales
         DecimalFormat format = new DecimalFormat("#.00");// el numero de ceros despues del entero
         String precio = format.format(producto.getPrecio());
 
@@ -274,6 +283,7 @@ public class QRFragment extends Fragment {
 
         //Por default el precio y el precio total es igual
         tvPrecioTotalProducto.setText(precio + SIMBOLO_EURO);
+
 
         //Si la cantidad cambia actualizamos el precioTotal
         etCantidad.addTextChangedListener(new TextWatcher() {

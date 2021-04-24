@@ -62,7 +62,7 @@ public class Producto {
             if (img.isEmpty()) {
                 return Environments.BASE_URL + "upload/usuarios/no-image";
             } else {
-                return Environments.BASE_URL + "uploads/productos/" + img;
+                return Environments.BASE_URL + "upload/productos/" + img;
             }
         }catch (NullPointerException e){
             return Environments.BASE_URL + "upload/usuarios/no-image";

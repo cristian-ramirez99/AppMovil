@@ -146,9 +146,7 @@ public class Dashboard extends AppCompatActivity {
                 if (response.code() == 200) {
                     try {
                         idPedido = response.body().getPedido().get_id();
-                        System.out.println("IdPedido get: " + idPedido);
                     } catch (Exception e) {
-                        System.out.println("No existe pedido temp");
                     }
 
                 }

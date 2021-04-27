@@ -224,9 +224,6 @@ public class QRFragment extends Fragment {
         int stock = producto.getStock() - cantidadSeleccionada;
         map.put("stock", stock);
 
-        System.out.println("Stock: " + stock);
-        System.out.println("IdProducto" + producto.getId());
-
         //Hace peticion @PUT(/productos)
         Call<Void> call = retrofitInterface.actualizarStock(token, producto.getId(), map);
 

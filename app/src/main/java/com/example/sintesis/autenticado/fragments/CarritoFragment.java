@@ -56,7 +56,7 @@ public class CarritoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View vista;
 
-
+        //Permisos necesarios
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -67,9 +67,12 @@ public class CarritoFragment extends Fragment {
         token = intent.getStringExtra(Login.TOKEN);
 
         Bundle args = getArguments();
+
+        //Obtenemos el idPedido
         idPedido = args.getString("idPedido");
 
         try {
+            //Hacemos peticion para obtener las lineaPedidos del pedidoTemp del usuario
             getLineaPedidos();
         } catch (IOException e) {
             e.printStackTrace();
@@ -163,9 +166,6 @@ public class CarritoFragment extends Fragment {
         int stock = lineaPedido.getCantidadad() + lineaPedido.getProducto().getStock();
         map.put("stock", stock);
 
-        System.out.println("Stock: "+stock);
-        System.out.println("IdProducto"+lineaPedido.getProducto().getId());
-
         //Hace peticion @PUT(/productos)
         Call<Void> call = retrofitInterface.actualizarStock(token, lineaPedido.getProducto().getId(), map);
 
@@ -217,6 +217,7 @@ public class CarritoFragment extends Fragment {
                 actualizarStock(lineaPedido);
 
                 try {
+                    //Hacemos peticion para actualizar lineaPedidos del pedidoTemporal del usuario
                     getLineaPedidos();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -232,6 +233,7 @@ public class CarritoFragment extends Fragment {
         dialog.show();
     }
 
+    //Actualiza el view
     private void actualizarFragment() {
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();

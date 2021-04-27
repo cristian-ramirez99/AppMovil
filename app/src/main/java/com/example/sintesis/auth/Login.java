@@ -19,7 +19,6 @@ import com.example.sintesis.info.Info;
 import com.example.sintesis.R;
 import com.example.sintesis.RetrofitInterface;
 import com.example.sintesis.autenticado.Dashboard;
-import com.example.sintesis.results.LineaPedidoResult;
 import com.example.sintesis.results.LoginResult;
 
 import java.io.IOException;
@@ -65,6 +64,7 @@ public class Login extends AppCompatActivity {
         ivInfo = findViewById(R.id.ivInfoLogin);
         tvPasswordOlvidada = findViewById(R.id.tvPasswordOlvidadaLogin);
 
+        //OnClick en contraseña olvidada, abre el modal de contraseña olvidada
         tvPasswordOlvidada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +72,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        //OnClick en el icono info cambia de activity a la guia del usuario
         ivInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +80,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        //Hacer login onClick
+        //OnClick hacer login
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +88,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        //Ir a la activity registrar onClick
+        //OnClick rr a la activity registrar
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,7 +207,9 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 String email = etCorreo.getText().toString();
                 try {
+                    //Si el campo email no esta vacio
                     if (!email.isEmpty()) {
+                        //Hacemos peticion para recuperar password
                         recuperarPassword(email);
                     }
                 } catch (IOException e) {
@@ -230,6 +233,8 @@ public class Login extends AppCompatActivity {
         dialog.show();
     }
 
+    /*Envia correo con la nueva contraseña, siempre y cuando el correo este ya registrado en
+     nuestra BBDD*/
     private void recuperarPassword(String email) throws IOException {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
@@ -248,7 +253,7 @@ public class Login extends AppCompatActivity {
         //Hace peticion para recuperar contraseña
         Call<Void> call = retrofitInterface.recuperarPassword(map);
 
-        Toast.makeText(this, "En su correo electronico tendra su nueva contraseña", Toast.LENGTH_SHORT).show();
+        Toast.makeText(Login.this, "En su correo electronico tendra su nueva contraseña", Toast.LENGTH_SHORT).show();
 
         call.execute();
     }

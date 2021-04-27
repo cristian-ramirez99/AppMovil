@@ -11,7 +11,6 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.example.sintesis.R;
-import com.example.sintesis.autenticado.Dashboard;
 import com.example.sintesis.auth.Login;
 import com.example.sintesis.auth.Registrar;
 
@@ -28,7 +27,7 @@ public class Info extends AppCompatActivity {
         //Obtener referencia de los widgets
         btn_volver = findViewById(R.id.btnVolverInfo);
 
-        iniciarVideo();
+        prepararVideo();
 
         btn_volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +37,9 @@ public class Info extends AppCompatActivity {
         });
     }
 
-    private void iniciarVideo() {
+    /*Pasamos el url del video a reproducir y le ponemos los controles, para poder pausar o
+     iniciar el video*/
+    private void prepararVideo() {
         vvVideo = findViewById(R.id.vvVideoInfo);
 
         String path = "android.resource://" + getPackageName() + "/" + R.raw.video_manual;
@@ -55,9 +56,11 @@ public class Info extends AppCompatActivity {
         String activity = getIntent().getStringExtra("activity");
         Intent intent;
 
+        //Si el usuario estaba anteriormente en la activity login
         if (activity.equals("login")) {
             intent = new Intent(this, Login.class);
 
+        //Si el usuario estaba anteriormente en la activity registrar
         } else {
             intent = new Intent(this, Registrar.class);
 

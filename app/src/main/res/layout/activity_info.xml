@@ -20,8 +20,8 @@
 
     <VideoView
         android:id="@+id/vvVideoInfo"
-        android:layout_width="328dp"
-        android:layout_height="163dp"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
         android:layout_marginTop="172dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.485"

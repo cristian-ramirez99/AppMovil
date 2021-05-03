@@ -133,6 +133,9 @@ public class QRFragment extends Fragment {
         }
     }
 
+    /* Hacemos peticion http para obtener el producto a partir del id. Si id correcto muestra
+     modal donde se muestra el producto en cuestion.Por otro lado, si falla algo muestra toast
+     con el mensaje de error correspondiente*/
     private void getProducto(String idProducto) {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
@@ -164,6 +167,10 @@ public class QRFragment extends Fragment {
         });
     }
 
+    /*Hacemos peticion http para crear linea pedido a partir del producto escaneado por QR y la
+     cantidad seleccionada por el usuario. Si todo ok se muestra toast indicando que se añadio
+     al carrito. Por otro lado, si algo falla se muestra toast con el mensaje de error correspondiente
+     */
     private void crearLineaPedido(Producto producto, String strCantidad) {
         int cantidadSeleccionada = Integer.valueOf(strCantidad);
 
@@ -176,8 +183,6 @@ public class QRFragment extends Fragment {
 
             //Crear interface
             retrofitInterface = retrofit.create(RetrofitInterface.class);
-            Toast.makeText(getContext(), "IdPEdido: " + idPedido, Toast.LENGTH_SHORT).show();
-            Toast.makeText(getContext(), "IdProducto: " + producto.getId(), Toast.LENGTH_SHORT).show();
 
             HashMap<String, String> map = new HashMap<>();
             map.put("producto", producto.getId());
@@ -207,7 +212,8 @@ public class QRFragment extends Fragment {
             Toast.makeText(getContext(), R.string.error_stock_insuficiente, Toast.LENGTH_SHORT).show();
         }
     }
-
+    /*Hacemos peticion http que quita x stock dependiendo de la cantidad seleccionada por el usuario
+     y del producto escaneado*/
     private void actualizarStock(Producto producto, String strCantidad) {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
@@ -230,19 +236,18 @@ public class QRFragment extends Fragment {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.code() == 200) {
-                    Toast.makeText(getContext(), "Stock actualizado", Toast.LENGTH_SHORT).show();
-                }
+
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 //Si no se puede conectar al servidor
-                System.out.println(t.getMessage());
             }
         });
     }
 
+    /*Abre el modal donde se muestra el producto escaneado por QR. Se puede elegir la cantidad
+     deseada a añadir al carrito */
     private void open_modal_producto(Producto producto) {
         dialogBuilder = new AlertDialog.Builder(getContext());
         final View modalView = getLayoutInflater().inflate(R.layout.activity_modal_producto, null);
@@ -258,13 +263,13 @@ public class QRFragment extends Fragment {
         ivSuma = modalView.findViewById(R.id.ivSumaModalProducto);
         ivResta = modalView.findViewById(R.id.ivRestaModalProducto);
         ivProducto = modalView.findViewById(R.id.ivProductoModaProducto);
-        
+
+        //Si hay stock, no se muestra el mensaje "no hay stock"
         if (producto.getStock() > 0) {
             tvStock.setVisibility(View.INVISIBLE);
         }
 
         String url = producto.getImg();
-        Toast.makeText(getContext(), url, Toast.LENGTH_SHORT).show();
 
         //setImagen del producto
         Glide.with(getContext()).load(url).into(ivProducto);

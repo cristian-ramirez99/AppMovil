@@ -9,7 +9,7 @@ import android.os.Handler;
 import com.example.sintesis.auth.Login;
 
 public class MainActivity extends AppCompatActivity {
-    private final long TIME_TO_CHANGE_ACTIVITY = 4000;
+    private final long TIME_TO_CHANGE_ACTIVITY = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

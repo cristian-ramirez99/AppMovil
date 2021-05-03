@@ -84,7 +84,9 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+                if (camposValidos()) {
+                    login();
+                }
             }
         });
 
@@ -97,11 +99,9 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    /*Comprobacion que todos los campos esten rellenados si es asi hace peticion HTTP para hacer
-      login. Si login correcto va a dashboard, en caso contrario se muestra modal indicando el
-      error*/
-    private void login() {
-
+    /*Comprueba si los campos a relleanar estan vacios. Si estan  vacios devuelve false, si todo ok
+    devuelve true */
+    private boolean camposValidos() {
         //Obtener referencia de texto de los widgets
         String correo = etCorreo.getText().toString();
         String password = etPassword.getText().toString();
@@ -111,8 +111,18 @@ public class Login extends AppCompatActivity {
         if (correo.isEmpty() || password.isEmpty()) {
             String mensaje = getString(R.string.error_campos_vacios);
             open_modal(mensaje);
-            return;
+            return false;
         }
+        return true;
+    }
+
+    /*Hace peticion HTTP para hacer login. Si login correcto va a dashboard, en caso contrario
+    se muestra modal indicando el error*/
+    private void login() {
+        //Obtener referencia de texto de los widgets
+        String correo = etCorreo.getText().toString();
+        String password = etPassword.getText().toString();
+
 
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()

@@ -60,6 +60,7 @@ public class Registrar extends AppCompatActivity {
         btnRegistrar = findViewById(R.id.btnRegistrarRegistrar);
         ivInfo = findViewById(R.id.ivInfoRegistrar);
 
+        //Iniciar activity info onClick
         ivInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +72,11 @@ public class Registrar extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registrar();
+
+                if (camposValidos()) {
+                    registrar();
+                }
+
             }
         });
 
@@ -84,7 +89,10 @@ public class Registrar extends AppCompatActivity {
         });
     }
 
-    private void registrar() {
+    /* Comprueba que todos los campos sean correctos. Comprueba que todos los campos no son empty,
+     que has aceptado los terminos y que la contraseña repetirContraseña sean iguales. En caso
+      de que algo no sea valido, se abre modal con el mensaje de error correspondiente*/
+    private boolean camposValidos() {
         //Obtener referencia de texto de los widgets
         String nombre = etNombre.getText().toString();
         String correo = etCorreo.getText().toString();
@@ -98,22 +106,33 @@ public class Registrar extends AppCompatActivity {
         if (nombre.isEmpty() || correo.isEmpty() || password.isEmpty() || repetirPassword.isEmpty()) {
             String mensaje = getString(R.string.error_campos_vacios);
             open_modal(mensaje);
-            return;
+            return false;
         }
 
         //Si las passwords no coinciden
         if (!password.equals(repetirPassword)) {
             String mensaje = getString(R.string.error_passwords_diferentes);
             open_modal(mensaje);
-            return;
+            return false;
         }
 
         //Si no se han aceptado los terminos
         if (!terminosAceptados) {
             String mensaje = getString(R.string.error_terminos_sin_aceptar);
             open_modal(mensaje);
-            return;
+            return false;
         }
+        return true;
+    }
+
+    /*Hace peticion http para crear un nuevo usuario. Si to va bien al acabar redirecciona a la
+     activity login.En caso de que algo falle, se abre modal con el mensaje de error
+     correspondiente*/
+    private void registrar() {
+        //Obtener referencia de texto de los widgets
+        String nombre = etNombre.getText().toString();
+        String correo = etCorreo.getText().toString();
+        String password = etPassword.getText().toString();
 
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
@@ -167,7 +186,7 @@ public class Registrar extends AppCompatActivity {
     //Inicia activity info
     private void change_activity_to_info() {
         Intent intent = new Intent(this, Info.class);
-        intent.putExtra("activity","registrar");
+        intent.putExtra("activity", "registrar");
 
         startActivity(intent);
     }

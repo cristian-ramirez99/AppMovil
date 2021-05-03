@@ -40,12 +40,18 @@ public class Info extends AppCompatActivity {
     /*Pasamos el url del video a reproducir y le ponemos los controles, para poder pausar o
      iniciar el video*/
     private void prepararVideo() {
+        //Obtener referencia de los widgets
         vvVideo = findViewById(R.id.vvVideoInfo);
 
+        //Obtenemos el path donde esta el video
         String path = "android.resource://" + getPackageName() + "/" + R.raw.video_manual;
+
         Uri uri = Uri.parse(path);
+
+        //Le pasamos al widget el video a reproducir
         vvVideo.setVideoURI(uri);
 
+        //Ponemos los controles del video para que el usuario lo gestioner (pausar o iniciar video)
         MediaController mediaController = new MediaController(this);
         vvVideo.setMediaController(mediaController);
         mediaController.setAnchorView(vvVideo);
@@ -60,7 +66,7 @@ public class Info extends AppCompatActivity {
         if (activity.equals("login")) {
             intent = new Intent(this, Login.class);
 
-        //Si el usuario estaba anteriormente en la activity registrar
+            //Si el usuario estaba anteriormente en la activity registrar
         } else {
             intent = new Intent(this, Registrar.class);
 

@@ -44,6 +44,8 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
     @Override
     public ListaAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_productos, null, false);
+
+        //Obtener referencia del widget
         ivBasura = view.findViewById(R.id.ivBasuraListaProductos);
 
         return new ListaAdapter.ViewHolder(view);
@@ -52,10 +54,6 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(final ListaAdapter.ViewHolder holder, final int position) {
         holder.bindData(lineaPedidos[position]);
-    }
-
-    public void setItems(LineaPedido[] items) {
-        lineaPedidos = items;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -100,7 +98,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
         }
     }
 
-    //Devuelve el precio * cantidad de un producto
+    //Devuelve la facturacion de un producto por pedido
     private double calcularPrecioTotalProducto(Double precio, int canitdad) {
         return precio * canitdad;
     }

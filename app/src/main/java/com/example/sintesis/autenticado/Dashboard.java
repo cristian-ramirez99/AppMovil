@@ -126,7 +126,8 @@ public class Dashboard extends AppCompatActivity {
             return false;
         }
     };
-
+    /*Hacemos peticion para obtener el carrito actual. En caso de que no existiera se mostraria
+     un toast con el error*/
     private void getPedidoTemp() {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
@@ -160,6 +161,8 @@ public class Dashboard extends AppCompatActivity {
         });
     }
 
+    /*Hacemos peticion http para obtener el uid del usuario, en caso de fallo se mostraria toast
+    con el mensaje de error*/
     private void renew(String token) {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
@@ -188,7 +191,7 @@ public class Dashboard extends AppCompatActivity {
             }
         });
     }
-
+    /*Hacemos peticion http para crear pedido. Inicialmente no tendria lineaPedido asociada*/
     private void crearPedido() {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
@@ -211,7 +214,6 @@ public class Dashboard extends AppCompatActivity {
             public void onResponse(Call<PedidoResult> call, Response<PedidoResult> response) {
                 if (response.code() == 200) {
                     idPedido = response.body().getPedido().get_id();
-                    System.out.println("idPedido POST: " + idPedido);
                 }
             }
 

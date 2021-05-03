@@ -103,6 +103,7 @@ public class CarritoFragment extends Fragment {
         return vista;
     }
 
+    /*Hacemos peticion http para obtener todas las lineasPedido*/
     private void getLineaPedidos() throws IOException {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
@@ -119,6 +120,8 @@ public class CarritoFragment extends Fragment {
         lineaPedidos = call.execute().body().getLineaPedidos();
     }
 
+    /*Hacemos peticcion httpm para eliminar una lineaPedido. En caso de fallo se mostraria el
+     error correspondiente */
     private void eliminarLineaPedido(String idLineaPedido) {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
@@ -129,16 +132,12 @@ public class CarritoFragment extends Fragment {
         //Crear interface
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-        System.out.println("Delete: " + idLineaPedido);
         //Hace peticion @Delete(/lineaPedidos)
         Call<Void> call = retrofitInterface.deleteLineaPedido(token, idLineaPedido);
 
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.code() == 200) {
-                    System.out.println("Producto eliminado");
-                }
             }
 
             @Override
@@ -151,6 +150,7 @@ public class CarritoFragment extends Fragment {
         });
     }
 
+    /*Hacemos peticion http para devolver stock cuando se elimina lineaPedido.*/
     private void actualizarStock(LineaPedido lineaPedido) {
         //Convertimos HTTP API in to interface de java
         retrofit = new Retrofit.Builder()
@@ -172,19 +172,15 @@ public class CarritoFragment extends Fragment {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.code() == 200) {
-                    System.out.println("Producto actualizado");
-                }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                //Si no se puede conectar al servidor
-                System.out.println(t.getMessage());
             }
         });
     }
 
+    /*Abre modal para eliminar producto del carrito. */
     private void open_modal_eliminar_producto(LineaPedido lineaPedido) {
         dialogBuilder = new AlertDialog.Builder(getContext());
 
@@ -196,6 +192,7 @@ public class CarritoFragment extends Fragment {
         btnCancelar = modalView.findViewById(R.id.btnCancelarModalEliminarProducto);
         tvMensaje = modalView.findViewById(R.id.tvMensajeModalEliminarProducto);
 
+        //Mostramos al usuario el nombre del producto a borrar
         tvMensaje.append(" " + lineaPedido.getProducto().getNombre() + "?");
 
         //Cerrar modal onClick
@@ -222,7 +219,10 @@ public class CarritoFragment extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                //Actualizamos el view
                 actualizarFragment();
+
+                //Cerramos modal
                 dialog.dismiss();
             }
         });

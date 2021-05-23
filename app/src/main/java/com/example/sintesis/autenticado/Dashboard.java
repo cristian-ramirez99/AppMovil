@@ -92,7 +92,7 @@ public class Dashboard extends AppCompatActivity {
                     crearPedido();
                 }
             }
-        }, 1000);   //0.5 seconds
+        }, 1000);   //1 seconds
 
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -100,7 +100,7 @@ public class Dashboard extends AppCompatActivity {
                 loadFragment(QRFragment);
 
             }
-        }, 1500);
+        }, 1500);//1.5 seconds
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener
@@ -126,6 +126,7 @@ public class Dashboard extends AppCompatActivity {
             return false;
         }
     };
+
     /*Hacemos peticion para obtener el carrito actual. En caso de que no existiera se mostraria
      un toast con el error*/
     private void getPedidoTemp() {
@@ -155,8 +156,8 @@ public class Dashboard extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PedidoResult> call, Throwable t) {
-                Toast.makeText(Dashboard.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(Dashboard.this, R.string.error_conexion_DB, Toast.LENGTH_SHORT).show();
+                change_activity_to_login();
             }
         });
     }
@@ -186,11 +187,12 @@ public class Dashboard extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RenewResult> call, Throwable t) {
-                Toast.makeText(Dashboard.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(Dashboard.this, R.string.error_conexion_DB, Toast.LENGTH_SHORT).show();
+                change_activity_to_login();
             }
         });
     }
+
     /*Hacemos peticion http para crear pedido. Inicialmente no tendria lineaPedido asociada*/
     private void crearPedido() {
         //Convertimos HTTP API in to interface de java
@@ -219,7 +221,8 @@ public class Dashboard extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PedidoResult> call, Throwable t) {
-                Toast.makeText(Dashboard.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Dashboard.this, R.string.error_conexion_DB, Toast.LENGTH_SHORT).show();
+                change_activity_to_login();
 
             }
         });
@@ -244,5 +247,6 @@ public class Dashboard extends AppCompatActivity {
     private void change_activity_to_login() {
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
+        finish();
     }
 }

@@ -45,7 +45,7 @@
     <string name="error_passwords_diferentes">Contraseñas no coinciden</string>
     <string name="error_terminos_sin_aceptar">Debes aceptar los terminos</string>
     <string name="error_autenticacion">No se pudo hacer login</string>
-    <string name="error_conexion_DB">No se pudo conectar con el servidor</string>
+    <string name="error_conexion_DB">El tiempo de espera fue mayor al esperado</string>
     <string name="error_correo_no_existe">Correo no registrado</string>
     <string name="error_password">Contraseña no válida</string>
     <string name="error_correo_existe">El correo ya esta registrado</string>
